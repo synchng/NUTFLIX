@@ -7,7 +7,7 @@ import { randomBytes } from "node:crypto";
 import { networkInterfaces } from "node:os";
 import { fileURLToPath } from "node:url";
 import { Server } from "socket.io";
-import { activeRegions, hit, validRegions, clamp, characterIds } from "./src/logic.js";
+import { activeRegions, hit, validRegions, clamp, characterIds, VIDEOS } from "./src/logic.js";
 const prod = process.env.NODE_ENV === "production" || process.argv.includes("--prod");
 const dist = fileURLToPath(new URL("./dist/", import.meta.url));
 const app = express();
@@ -53,9 +53,10 @@ app.post("/api/regions", async (req, res) => {
 const state = (s) => ({
   pointer: s.pointer,
   time: s.time,
+  video: s.video,
   playing: !!s.playing,
   selected: s.selected,
-  hover: hit(activeRegions(regions, s.time), s.pointer),
+  hover: hit(activeRegions(regions, s.time, s.video), s.pointer),
   connected: [...(io.sockets.adapter.rooms.get(s.id) || [])].some(
     (id) => io.sockets.sockets.get(id)?.data.role === "remote",
   ),
@@ -70,6 +71,7 @@ io.on("connection", (socket) => {
         remoteToken: token(),
         pointer: { x: 0.5, y: 0.5 },
         time: 0,
+        video: VIDEOS.sunshine,
         selected: null,
         touched: Date.now(),
       };
@@ -123,6 +125,14 @@ io.on("connection", (socket) => {
     s.touched = Date.now();
     io.to(s.id).emit("state", state(s));
   });
+  // The PC tells the session which title is playing so selections hit that video's regions.
+  socket.on("video", (v) => {
+    const s = sessions.get(socket.data.sid);
+    if (!s || socket.data.role !== "host" || !Object.values(VIDEOS).includes(v)) return;
+    s.video = v;
+    s.touched = Date.now();
+    io.to(s.id).emit("state", state(s));
+  });
   socket.on("time", (t) => {
     const s = sessions.get(socket.data.sid);
     if (!s || socket.data.role !== "host" || !Number.isFinite(t) || t < 0)
@@ -141,7 +151,7 @@ io.on("connection", (socket) => {
     const s = sessions.get(socket.data.sid);
     if (!s) return;
     const target = socket.data.role === 'remote' || options?.target === 'remote' ? 'remote' : 'host';
-    const selected = hit(activeRegions(regions, s.time), s.pointer);
+    const selected = hit(activeRegions(regions, s.time, s.video), s.pointer);
     if (!selected) {
       return io.to(s.id).emit("selection-miss", { target });
     }

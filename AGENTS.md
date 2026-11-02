@@ -4,9 +4,11 @@ AI 코딩 에이전트(Codex 등)와 사람이 이 프로젝트를 수정할 때
 
 ## 프로젝트 한 줄 요약
 
-화면 속 "저사람 누구야?": TV(PC 브라우저)에서 치이카와 영상을 보다가 영상 속 캐릭터를 휴대폰(웹 리모컨)이나 마우스로 가리키면, 영상을 멈추지 않고 캐릭터 → 일본어판 성우 → 그 성우의 다른 출연작(소속사 공식 프로필 기준)을 탐색하는 넷플릭스풍 웹 프로토타입(NUTFLIX)입니다. 멀티모달 인터페이스 디자인 과제물이며 UI 문구는 모두 한국어입니다.
+화면 속 "저사람 누구야?": 넷플릭스풍 홈(NUTFLIX)에서 작품을 고르고, TV(PC 브라우저)로 보다가 화면 속 대상을 휴대폰(웹 리모컨)이나 마우스로 가리키면 영상을 멈추지 않고 정보를 탐색하는 웹 프로토타입입니다. 멀티모달 인터페이스 디자인 과제물이며 UI 문구는 모두 한국어입니다.
 
-영상은 하나뿐입니다: めざましテレビ 공식 채널의 「ちいかわ」 51~55화(`h0vBWdZf2l0`, 약 330초). **이 영상은 2026-11-06 07:59(JST)까지 한정 공개**라 이후에는 재생되지 않습니다.
+작품은 둘입니다(`src/data.ts`의 `titles`, 영상 ID는 `src/logic.js`의 `VIDEOS`).
+- **미스터 션샤인** (`sunshine`, tvN DRAMA 공식 하이라이트 `4YTXB5qkGzI`, 약 841초): 인물(→ 배우), 소품, 장소를 가리켜 찾고, OST·촬영지 목록을 함께 보여 줍니다. 홈의 대표 작품입니다.
+- **치이카와** (`chiikawa`, 「ちいかわ」 51~55화 `h0vBWdZf2l0`, 약 330초): 캐릭터 → 일본어판 성우 → 공식 프로필 출연작. **이 영상은 2026-11-06 07:59(JST)까지 한정 공개**입니다.
 
 ## 명령어
 
@@ -29,17 +31,17 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 |---|---|
 | `server.mjs` | Express + Socket.IO 서버. 세션(메모리), 영역 판정, 휴대폰 입력 중계, `/api/regions` 저장, 개발 시 Vite 미들웨어 |
 | `src/main.tsx` | 앱 대부분: 플레이어, 정보 패널, TV 선택 피드백(`pulse`), 휴대폰 미리보기 시트(`sheetOpen`), 엔딩 카드, 리모컨(휴대폰) 화면, 장면 편집기 |
-| `src/BrowseHome.tsx` | 홈 화면(캐릭터 행, 목소리의 주인공 선반), 치이카와 상세(`TitleDetails`) |
-| `src/data.ts` | 영상(`episode`), 캐릭터(`characters`), 성우 공식 프로필 출연작(`actors`) |
+| `src/BrowseHome.tsx` | 홈(작품 카드, 인물·소품·장소·OST 줄, 목소리의 주인공), 작품 상세(`TitleDetails`), OST·촬영지(`TitleExtras`) |
+| `src/data.ts` | 작품(`titles`), 가리킬 수 있는 대상(`characters`, `kind`: character/person/prop/place), 성우·배우(`actors`), `itemSub`·`itemsOf` |
 | `src/workInfo.ts` | 출연작 제목별 공식 클립(`clip`: 캐릭터 PV / 작품 PV), 한국어 표시용 `ko`(`title`, `role`, `summary`)와 소개 원문 링크(`wiki`) |
 | `src/WorkClip.tsx` | 출연작 상세 화면. 같은 성우의 다른 출연작으로 이동(`onOpen`) |
-| `src/logic.js` + `src/logic.d.ts` | 영상 ID(`VIDEO`), 캐릭터 id 목록, 영역 활성화·보간·선택 판정·데이터 검증. 서버와 화면이 함께 씀 |
+| `src/logic.js` + `src/logic.d.ts` | 영상 ID(`VIDEOS`), 대상 id 목록(`characterIds`), 영상별 영역 활성화(`activeRegions(regions, time, video)`)·보간·선택 판정·데이터 검증. 서버와 화면이 함께 씀 |
 | `src/RemoteCursor.tsx` | 휴대폰 터치패드 입력으로 PC 화면 전체를 조작하는 가상 커서 (작은 원, 2초 입력이 없으면 숨김, 캐릭터 위에서 링 표시) |
 | `src/Modal.tsx` | 공용 모달(포커스 트랩) |
 | `src/streaming.css`, `src/style.css` | 스타일. 새 스타일은 `streaming.css` 끝에 설명 주석과 함께 추가 |
-| `data/regions.json` | 캐릭터 영역 101개 (서버가 시작할 때 읽음) |
+| `data/regions.json` | 영역 117개(치이카와 101, 미스터 션샤인 16). 영역마다 `video` 필수 (서버가 시작할 때 읽음) |
 | `data/timeline-review.json` | 영역을 만들 때 본 스토리보드 시점 기록 |
-| `public/characters`, `public/catalog`, `public/actors` | 이미지와 각 폴더의 `ATTRIBUTION.md`(출처) |
+| `public/characters`, `public/catalog`, `public/actors`, `public/sunshine` | 이미지와 각 폴더의 `ATTRIBUTION.md`(출처) |
 | `logic.test.mjs`, `integration.test.mjs` | 테스트 |
 
 ### `src/main.tsx` 길잡이
@@ -48,7 +50,8 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 
 | 찾을 이름 | 내용 |
 |---|---|
-| `enterWatch(time)` | 재생 화면으로 전환하고 해당 시점부터 재생 |
+| `titleId`, `current`, `openDetails(id)` | TV가 보고 있는 작품(휴대폰은 서버 state의 `video`로 따라감), 작품 상세 열기 |
+| `enterWatch(time, id?)` | 재생 화면으로 전환하고 해당 시점부터 재생. 다른 작품이면 `loadVideoById`로 바꾸고 서버에 `video`를 알림 |
 | `showUpNext`, `goUpNext` | 엔딩 카드(크레딧 보기 / 상세 정보), 5초 카운트다운, 끝나면 치이카와 상세 열기 |
 | `socket.on("selected")`, `socket.on("selection-miss")` | 선택 결과 처리. TV/휴대폰 역할 분담이 여기서 결정됨 |
 | `pulse` | 휴대폰으로 선택했을 때 TV 포인터 자리에 0.8초 뜨는 체크·원 확산 |
@@ -62,20 +65,20 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 
 ## 데이터 모델
 
-### 캐릭터 (`src/data.ts` → `characters`)
-`Character` 타입: `id`, `name`, `jp`, `voice`(일본어판 성우 한국어 표기), `voiceJp`(일본어 표기, `actors`의 키), `image`, `color`, `description`, `voiceSource`, 선택 항목 `voiceImage`(성우 사진).
+### 가리킬 수 있는 대상 (`src/data.ts` → `characters`)
+`Character` 타입: `id`, `title`(작품), `kind`(`character` 애니 캐릭터 · `person` 드라마 인물 · `prop` 소품 · `place` 장소), `name`, `jp`(부제), `voice`(성우 또는 배우 이름, 소품·장소는 빈 문자열), `voiceJp`(`actors`의 키), `image`, `color`, `description`, `voiceSource`, 선택 항목 `voiceImage`, `related`(장면 속 인물 id), `facts`([항목, 값]), `source`(출처 링크).
 
 **캐릭터를 추가하면 `src/logic.js`의 `characterIds`에도 같은 id를 넣어야 합니다.** 서버가 이 목록으로 영역 데이터와 선택 요청을 검증하므로, 빠뜨리면 영역 저장과 선택이 조용히 거부됩니다.
 
 ### 성우 (`actors`)
 `voiceJp`를 키로 `{ agency, profile?, works: [작품명, 배역][] }`. `works`는 **소속사 공식 프로필에 실린 애니메이션 출연작을 표기 그대로** 옮긴 것이며 치이카와 자체는 뺍니다. 공식 프로필이 없으면 `profile`을 비우고 `works`를 빈 배열로 둡니다(화면은 "크레딧이 나온 영상" 링크를 보여 줌).
 
-### 영상 (`episode`, `VIDEO`)
-`VIDEO`(logic.js)가 유일한 YouTube 영상 ID이고, `episode`에 표시용 제목·길이·엔딩 시작 초(`credits`)·출처가 있습니다.
+### 작품 (`titles`, `VIDEOS`)
+`VIDEOS`(logic.js)가 작품별 YouTube 영상 ID이고, `titles`에 제목·장르·소개·길이·엔딩 시작 초(`credits`)·출처, 미스터 션샤인은 `ost`(위키백과 OST 표)와 `locations`(기사 출처가 있는 촬영지), `otherLocations`(위키백과 목록)가 있습니다.
 
 ### 영역 (`data/regions.json`)
 ```json
-{ "characterId": "chiikawa", "startTime": 3, "endTime": 7,
+{ "characterId": "chiikawa", "video": "h0vBWdZf2l0", "startTime": 3, "endTime": 7,
   "boundingBox": { "x": 0.44, "y": 0.1, "width": 0.31, "height": 0.75 },
   "keyframes": [{ "time": 5, "boundingBox": { "x": 0.44, "y": 0.1, "width": 0.31, "height": 0.75 } }] }
 ```
@@ -88,8 +91,10 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 1. **영상은 선택 때문에 멈추지 않습니다.** 예외는 장면 편집기에서 영역을 그릴 때와, 출연작 상세에서 다른 클립을 재생할 때(소리 겹침 방지)뿐입니다.
 2. **TV와 휴대폰의 역할을 나눕니다.** 휴대폰으로 선택하면 TV에는 `pulse`(0.8초 체크)만, 미리보기 시트와 상세 탐색은 휴대폰에만 나옵니다. TV에 캐릭터·성우 정보 패널을 띄우거나 선택 때 영상을 멈추지 마세요. 휴대폰 없이 PC 마우스로 선택하면 TV 유리 패널에서 탐색합니다.
 3. **빈 곳을 누르면 검색 창을 띄우지 않습니다.** 패널이 열려 있으면 패널만 닫고, 아니면 "앗, 캐릭터가 선택되지 않았어요…" 안내를 띄웁니다.
-4. **성우는 일본어판 기준이고, 출연작은 공식 프로필 기준입니다.** 위키·팬 사이트·기억으로 출연작을 채우지 마세요.
-5. **엔딩이 오면 치이카와 상세로 이어집니다.** 카운트다운은 5초이고 재생 중일 때만 흐릅니다.
+4. **치이카와 성우는 일본어판 기준이고, 출연작은 공식 프로필 기준입니다.** 위키·팬 사이트·기억으로 출연작을 채우지 마세요.
+4-1. **실존 인물은 얼굴로 알아보지 않습니다.** 미스터 션샤인 인물 영역은 배우 이름이 화면에 나오는 장면에만 있습니다. 이름이 나오지 않는 장면에 인물을 추가하려면 사용자가 직접 확인해 장면 편집기로 넣게 하세요. 소품 설명도 이름이 나오지 않는 장면에서는 누가 들고 있는지 단정하지 않습니다.
+4-2. **음악은 장면별로 지어내지 않습니다.** OST는 위키백과 표 그대로의 작품 전체 목록이며, 어느 장면에 어떤 곡이 흐르는지는 확인된 자료가 있을 때만 넣으세요.
+5. **엔딩이 오면 그 작품의 상세로 이어집니다.** 카운트다운은 5초이고 재생 중일 때만 흐릅니다.
 6. **정보는 확인된 것만 넣습니다.** 캐릭터 이름·성우·배역을 추측해서 만들지 마세요. 출처가 없으면 넣지 말고, 넣으면 README의 출처나 `ATTRIBUTION.md`에 남기세요.
 
 ## 자주 하는 작업

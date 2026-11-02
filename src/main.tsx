@@ -33,8 +33,9 @@ import {
   validRegions,
   type Region,
 } from "./logic.js";
-import { characters, official, actors, episode } from "./data";
-import { BrowseHome, TitleDetails } from "./BrowseHome";
+import { characters, official, actors, titles, titleList, itemSub, itemsOf, kindLabel, type TitleId, type Track, type Title } from "./data";
+import { BrowseHome, TitleDetails, TitleExtras } from "./BrowseHome";
+const kindEn = { character: "CHARACTER", person: "CAST", prop: "PROP", place: "PLACE" } as const;
 import { WorkClip } from "./WorkClip";
 import { workInfo } from "./workInfo";
 import { Modal } from "./Modal";
@@ -53,6 +54,7 @@ type Session = { id: string; hostToken: string; remoteToken: string };
 type State = {
   pointer: Point;
   time: number;
+  video?: string;
   playing?: boolean;
   selected: string | null;
   hover: string | null;
@@ -107,32 +109,40 @@ function App() {
     [pairOpen, setPairOpen] = useState(false),
     [brightnessOpen, setBrightnessOpen] = useState(false),
     [showSaved, setShowSaved] = useState(false);
-  const [saved, setSaved] = useState(() => {
+  const [saved, setSaved] = useState<TitleId[]>(() => {
     try {
-      return localStorage.getItem("point-saved") === "true";
+      return (JSON.parse(localStorage.getItem("point-saved-titles") || "[]") as TitleId[]).filter((id) => id in titles);
     } catch {
-      return false;
+      return [];
     }
   });
-  const [resume, setResume] = useState(() => {
+  // Which title the TV is on; each title keeps its own resume point.
+  const [titleId, setTitleId] = useState<TitleId>(() => {
+    try { return localStorage.getItem("point-title") === "chiikawa" ? "chiikawa" : "sunshine"; } catch { return "sunshine"; }
+  });
+  const titleRef = useRef(titleId);
+  titleRef.current = titleId;
+  const [detailsId, setDetailsId] = useState<TitleId>(titleId);
+  const readResume = (id: TitleId) => {
     try {
-      const t = Number(localStorage.getItem("point-resume"));
-      return Number.isFinite(t) ? Math.max(0, Math.min(330, t)) : 0;
+      const t = Number(localStorage.getItem("point-resume-" + id));
+      return Number.isFinite(t) ? Math.max(0, Math.min(titles[id].duration, t)) : 0;
     } catch {
       return 0;
     }
-  });
+  };
+  const [resume, setResume] = useState(() => readResume(titleId));
   const pendingPlay = useRef<number | null>(
       params.get("view") === "watch" ? resume : null,
     ),
     lastResumeSave = useRef(-1);
   const overlayRef = useRef({ titleOpen, pairOpen });
   overlayRef.current = { titleOpen, pairOpen };
-  const toggleSaved = () =>
+  const toggleSaved = (id: TitleId) =>
     setSaved((previous) => {
-      const next = !previous;
+      const next = previous.includes(id) ? previous.filter((x) => x !== id) : [...previous, id];
       try {
-        localStorage.setItem("point-saved", String(next));
+        localStorage.setItem("point-saved-titles", JSON.stringify(next));
       } catch {}
       return next;
     });
@@ -229,6 +239,8 @@ function App() {
     [duration, setDuration] = useState(0),
     [speed, setSpeed] = useState(() => { try { const n = Number(localStorage.getItem('point-remote-speed')); return n >= .3 && n <= 2 ? n : 1; } catch { return 1; } }),
     [sensor, setSensor] = useState(false);
+  // The phone follows whatever the TV is playing.
+  const current: Title = remote ? (titleList.find((x) => x.video === state.video) ?? titles[titleId]) : titles[titleId];
   useEffect(() => { setResultMinimized(false); setAllWorks(false); }, [localSelected, libraryOpen, resultOpen]);
   const remoteInfo = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -264,7 +276,15 @@ function App() {
     orientation = useRef<{ a: number; b: number } | null>(null),
     sensorCleanup = useRef<(() => void) | null>(null),
     lastSend = useRef(0);
-  const enterWatch = (time: number) => {
+  const enterWatch = (time: number, id: TitleId = titleRef.current) => {
+    const switching = id !== titleRef.current;
+    if (switching) {
+      titleRef.current = id;
+      setTitleId(id);
+      setResume(readResume(id));
+      try { localStorage.setItem("point-title", id); } catch {}
+      socket.emit("video", titles[id].video);
+    }
     setUpNextDismissed(false);
     setView("watch");
     setFullscreen(true);
@@ -278,10 +298,17 @@ function App() {
     history.pushState({ view: "watch" }, "", "/?view=watch");
     if (ready) {
       setTimeout(() => {
-        player.current?.seekTo?.(time, true);
-        player.current?.playVideo?.();
+        if (switching) player.current?.loadVideoById?.({ videoId: titles[id].video, startSeconds: time });
+        else {
+          player.current?.seekTo?.(time, true);
+          player.current?.playVideo?.();
+        }
       }, 60);
     } else pendingPlay.current = time;
+  };
+  const openDetails = (id: TitleId) => {
+    setDetailsId(id);
+    setTitleOpen(true);
   };
   const goBrowse = () => {
     player.current?.pauseVideo?.();
@@ -386,6 +413,7 @@ function App() {
         } catch {}
         socket.emit("create", saved, (s: Session) => {
           setSession(s);
+          socket.emit("video", titles[titleRef.current].video);
           sessionStorage.setItem("point-session", JSON.stringify(s));
         });
       }
@@ -479,7 +507,7 @@ function App() {
     const init = () => {
       if (disposed) return;
       player.current = new (window as any).YT.Player("youtube", {
-        videoId: episode.video,
+        videoId: titles[titleRef.current].video,
         playerVars: { playsinline: 1, controls: 0, rel: 0, origin: location.origin },
         events: {
           onStateChange: (e: any) => {
@@ -492,7 +520,7 @@ function App() {
               const t = player.current?.getCurrentTime?.() || 0;
               setResume(t);
               try {
-                localStorage.setItem("point-resume", String(t));
+                localStorage.setItem("point-resume-" + titleRef.current, String(t));
               } catch {}
             }
           },
@@ -502,6 +530,9 @@ function App() {
               player.current.mute();
             else player.current.unMute();
             setReady(true);
+            const want = titles[titleRef.current].video;
+            if (player.current.getVideoData?.().video_id !== want)
+              player.current.cueVideoById({ videoId: want, startSeconds: pendingPlay.current ?? 0 });
             if (pendingPlay.current !== null) {
               player.current.seekTo(pendingPlay.current, true);
               player.current.playVideo();
@@ -517,7 +548,7 @@ function App() {
                 if (second !== lastResumeSave.current && second % 5 === 0) {
                   lastResumeSave.current = second;
                   try {
-                    localStorage.setItem("point-resume", String(t));
+                    localStorage.setItem("point-resume-" + titleRef.current, String(t));
                   } catch {}
                 }
               }
@@ -582,7 +613,7 @@ function App() {
   const UP_NEXT_SECONDS = 5;
   const showUpNext =
     view === "watch" && ready && !editor &&
-    (playerState === 0 || (state.time >= episode.credits && !upNextDismissed));
+    (playerState === 0 || (state.time >= current.credits && !upNextDismissed));
   useEffect(() => {
     if (!showUpNext || !playing) {
       if (!showUpNext) setUpNextLeft(UP_NEXT_SECONDS);
@@ -594,12 +625,12 @@ function App() {
   const goUpNext = () => {
     player.current?.pauseVideo?.();
     setUpNextDismissed(true);
-    setTitleOpen(true);
+    openDetails(titleRef.current);
   };
   useEffect(() => {
     if (showUpNext && upNextLeft <= 0) goUpNext();
   }, [upNextLeft]);
-  const active = activeRegions(regions, state.time),
+  const active = activeRegions(regions, state.time, current.video),
     hover = hit(active, state.pointer),
     selected = characters.find(
       (c) => c.id === (localSelected || state.selected),
@@ -742,9 +773,9 @@ function App() {
   }, [brightnessOpen]);
   const library = (
     <div className="character-library">
-      <div className="eyebrow">CHARACTERS</div>
-      <h2>어떤 친구가 궁금하세요?</h2>
-      <p>이름이나 성우로 직접 찾아보세요.</p>
+      <div className="eyebrow">{current.name}</div>
+      <h2>{current.id === "chiikawa" ? "어떤 친구가 궁금하세요?" : "무엇이 궁금하세요?"}</h2>
+      <p>{current.id === "chiikawa" ? "이름이나 성우로 직접 찾아보세요." : "인물·배우·소품·장소 이름으로 찾아보세요."}</p>
       <label className="library-point-toggle">
         <input
           type="checkbox"
@@ -756,38 +787,43 @@ function App() {
       <label className="search-field">
         <Search size={16} />
         <input
-          aria-label="캐릭터 또는 성우 검색"
-          placeholder="캐릭터, 성우 이름 검색"
+          aria-label="이름 검색"
+          placeholder={current.id === "chiikawa" ? "캐릭터, 성우 이름 검색" : "인물, 배우, 소품, 장소 검색"}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </label>
       <div className="character-results">
-        {characters
+        {itemsOf(current.id)
           .filter((c) =>
-            (c.name + c.jp + c.voice + c.voiceJp).includes(query.trim()),
+            (c.name + c.jp + c.voice + c.voiceJp + kindLabel[c.kind]).includes(query.trim()),
           )
           .map((c) => (
             <button key={c.id} onClick={() => chooseCharacter(c.id)}>
               <CharacterArt character={c} compact />
               <span>
                 <strong>{c.name}</strong>
-                <small>{c.voice}</small>
+                <small>{itemSub(c)}</small>
               </span>
               <ArrowUpRight size={17} />
             </button>
           ))}
       </div>
-      {!characters.some((c) =>
-        (c.name + c.jp + c.voice + c.voiceJp).includes(query.trim()),
+      {!itemsOf(current.id).some((c) =>
+        (c.name + c.jp + c.voice + c.voiceJp + kindLabel[c.kind]).includes(query.trim()),
       ) && <p>검색 결과가 없어요. 다른 이름을 입력해 보세요.</p>}
       <p className="small muted">
         영상 속 직접 선택은 장면별로 등록한 위치를 사용합니다. 목록에서는 시간에
         관계없이 정보를 찾을 수 있어요.
       </p>
+      {current.ost && <TitleExtras title={current} />}
     </div>
   );
   const actor = selected && actors[selected.voiceJp];
+  const related = selected?.related ? characters.find((c) => c.id === selected.related) : undefined;
+  const linked = selected ? characters.filter((c) => c.related === selected.id) : [];
+  // Jump between items inside the panel without telling the TV (it is a browse, not a new pick).
+  const showItem = (id: string) => { setLocalSelected(id); setDetail("character"); };
   const profileWorks = actor?.works ?? [];
   const infoPanel = (
     <>
@@ -797,28 +833,69 @@ function App() {
         <div className={"detail detail-" + detail} key={selected.id + detail}>
           <button className="text-button" onClick={() => setDetail("character")}>
             <ChevronLeft size={15} />
-            {detail === "character" ? "캐릭터 정보" : "뒤로"}
+            {detail === "character" ? kindLabel[selected.kind] + " 정보" : "뒤로"}
           </button>
           {detail === "character" ? (
             <CharacterArt key={selected.id} character={selected} />
           ) : (
             <ActorPhoto key={selected.id} character={selected} />
           )}
-          <div className="eyebrow">{detail === "character" ? "CHARACTER" : "VOICE ACTOR"}</div>
+          <div className="eyebrow">{detail === "character" ? kindEn[selected.kind] : selected.kind === "person" ? "ACTOR" : "VOICE ACTOR"}</div>
           <h2>{detail === "character" ? selected.name : selected.voice}</h2>
           <p className="jp">{detail === "character" ? selected.jp : selected.voiceJp}</p>
           {detail === "character" ? (
             <>
               <p>{selected.description}</p>
-              <button className="list-button" onClick={() => setDetail("voice")}>
-                <span>
-                  <small>담당 성우 · 일본어판</small>
-                  {selected.voice}
-                </span>
-                <ArrowUpRight size={20} />
-              </button>
-              <a href={official} target="_blank" rel="noreferrer">
-                공식 캐릭터·캐스트 출처 ↗
+              {selected.voice && (
+                <button className="list-button" onClick={() => setDetail("voice")}>
+                  <span>
+                    <small>{selected.kind === "person" ? "배우" : "담당 성우 · 일본어판"}</small>
+                    {selected.voice}
+                  </span>
+                  <ArrowUpRight size={20} />
+                </button>
+              )}
+              {selected.facts && (
+                <dl className="item-facts">
+                  {selected.facts.map(([k, v]) => (
+                    <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+                  ))}
+                </dl>
+              )}
+              {related && (
+                <button className="list-button" onClick={() => showItem(related.id)}>
+                  <span>
+                    <small>{selected.kind === "place" ? "극 중 운영자" : "이 장면의 인물"}</small>
+                    {related.name}
+                  </span>
+                  <ArrowUpRight size={20} />
+                </button>
+              )}
+              {linked.length > 0 && (
+                <>
+                  <h3>이 인물과 이어진 소품·장소</h3>
+                  <div className="item-chips">
+                    {linked.map((c) => (
+                      <button key={c.id} onClick={() => showItem(c.id)}>
+                        <small>{kindLabel[c.kind]}</small>
+                        {c.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+              <a href={selected.source?.url ?? official} target="_blank" rel="noreferrer">
+                {selected.source ? `출처: ${selected.source.label} ↗` : "공식 캐릭터·캐스트 출처 ↗"}
+              </a>
+            </>
+          ) : selected.kind === "person" ? (
+            <>
+              <p>
+                「{titles[selected.title].name}」에서 {selected.name} 역을 맡았어요.
+              </p>
+              <p className="muted">배우의 다른 출연작은 위키백과에서 확인할 수 있어요.</p>
+              <a href={actor?.profile ?? selected.voiceSource} target="_blank" rel="noreferrer">
+                위키백과에서 {selected.voice} 찾기 ↗
               </a>
             </>
           ) : (
@@ -874,17 +951,17 @@ function App() {
         <div className="empty">
           <Focus size={44} />
           <h2>
-            궁금한 친구를
+            {current.id === "chiikawa" ? "궁금한 친구를" : "궁금한 인물·소품을"}
             <br />
             가리켜 보세요.
           </h2>
           <p>
-            영상 속 캐릭터를 직접 클릭하면
+            영상 속 대상을 직접 클릭하면
             <br />
-            목소리 너머의 이야기가 열립니다.
+            화면 너머의 이야기가 열립니다.
           </p>
           <button onClick={openLibrary}>
-            <Search size={15} /> 캐릭터 찾아보기
+            <Search size={15} /> 직접 찾아보기
           </button>
         </div>
       )}
@@ -1031,6 +1108,11 @@ function App() {
             <p>터치패드는 사이트 전체를 조작합니다. 기울기 센서는 영상 속 캐릭터를 가리킬 때 사용합니다.</p>
             <button className="wide" onClick={() => { calibration.current = orientation.current; point({x:.5,y:.5}); socket.emit('ui-center'); }}>포인터 기준점 재설정</button>
           </Modal>}
+          {current.ost && (
+            <section className="remote-extras">
+              <TitleExtras title={current} compact />
+            </section>
+          )}
           <section className="remote-history">
             <div className="remote-history-head">
               <h2>검색 기록</h2>
@@ -1044,7 +1126,7 @@ function App() {
                     <li key={id}>
                       <button onClick={() => chooseCharacter(id)}>
                         <img src={c.image} alt="" />
-                        <span><strong>{c.name}</strong><small>성우 {c.voice}</small></span>
+                        <span><strong>{c.name}</strong><small>{itemSub(c)}</small></span>
                       </button>
                     </li>
                   );
@@ -1076,9 +1158,9 @@ function App() {
               <div className="remote-sheet-body" key={selected.id}>
                 <img src={selected.image} alt="" />
                 <div>
-                  <small>{episode.title}</small>
+                  <small>{titles[selected.title].name}</small>
                   <strong>{selected.name}</strong>
-                  <span>성우 {selected.voice}</span>
+                  <span>{itemSub(selected)}</span>
                 </div>
                 <button className="remote-sheet-close" aria-label="미리보기 닫기" onClick={() => setSheetOpen(false)}><X size={18} /></button>
               </div>
@@ -1095,7 +1177,8 @@ function App() {
           {view === "browse" && (
             <BrowseHome
               onPlay={enterWatch}
-              onDetails={() => setTitleOpen(true)}
+              onDetails={openDetails}
+              titleId={titleId}
               onCharacter={chooseCharacter}
               onActor={openActor}
               onPair={() => setPairOpen(true)}
@@ -1111,7 +1194,6 @@ function App() {
               connected={state.connected}
               resume={resume}
               saved={saved}
-              onSave={toggleSaved}
               showSaved={showSaved}
               onTab={setShowSaved}
             />
@@ -1144,8 +1226,8 @@ function App() {
                   <ArrowLeft size={30} />
                 </button>
                 <div>
-                  <strong>{episode.title}</strong>
-                  <span>{episode.label}</span>
+                  <strong>{current.name}</strong>
+                  <span>{current.label}</span>
                 </div>
                 {editor && (
                   <button
@@ -1161,7 +1243,7 @@ function App() {
                 <button
                   aria-label="작품 상세 정보"
                   title="작품 상세 정보"
-                  onClick={() => setTitleOpen(true)}
+                  onClick={() => openDetails(titleId)}
                 >
                   <ListVideo size={26} />
                 </button>
@@ -1325,7 +1407,7 @@ function App() {
                     <div className="next-up" onClick={(e) => e.stopPropagation()}>
                       <p>
                         <small>이야기가 끝나가요</small>
-                        치이카와 상세 정보로 이동해요
+                        {current.name} 상세 정보로 이동해요
                       </p>
                       <div>
                         {playerState !== 0 && (
@@ -1438,7 +1520,7 @@ function App() {
                     </div>
                   </div>
                   <span className="playback-episode-title">
-                    치이카와 <span>{episode.label}</span>
+                    {current.name} <span>{current.label}</span>
                   </span>
                   <div className="player-feature-controls">
                     <button
@@ -1519,8 +1601,8 @@ function App() {
                 <div className="video-meta">
                   <div>
                     <span className="tag">지금 시청 중</span>
-                    <h2>치이카와 · {episode.label}</h2>
-                    <p>YouTube · 일본어 원어</p>
+                    <h2>{current.name} · {current.label}</h2>
+                    <p>YouTube · {current.source}</p>
                   </div>
                   <button
                     aria-label="재생 또는 일시정지"
@@ -1531,6 +1613,7 @@ function App() {
                 </div>
                 {editor && (
                   <Editor
+                    title={current}
                     drawn={drawn}
                     regions={regions}
                     setRegions={setRegions}
@@ -1558,14 +1641,15 @@ function App() {
           {titleOpen &&
             createPortal(
               <Modal
-                label="치이카와 작품 상세"
+                label={titles[detailsId].name + " 작품 상세"}
                 onClose={() => setTitleOpen(false)}
                 className="title-modal"
               >
                 <TitleDetails
-                  onPlay={enterWatch}
-                  onSave={toggleSaved}
-                  saved={saved}
+                  title={titles[detailsId]}
+                  onPlay={(time) => enterWatch(time, detailsId)}
+                  onSave={() => toggleSaved(detailsId)}
+                  saved={saved.includes(detailsId)}
                   onCharacter={chooseCharacter}
                 />
               </Modal>,
@@ -1655,7 +1739,7 @@ function App() {
 function ActorPhoto({ character }: { character: (typeof characters)[number] }) {
   const [failed, setFailed] = useState(false);
   return <a className="actor-portrait" href={character.voiceSource} target="_blank" rel="noreferrer" aria-label={character.voice + " 공식 프로필"}>
-    {failed || !character.voiceImage ? <span>공식 프로필 보기 ↗</span> : <img src={character.voiceImage} alt={character.voice + " 프로필 사진"} onError={() => setFailed(true)} />}
+    {failed || !character.voiceImage ? <span>{character.kind === "person" ? "위키백과에서 보기 ↗" : "공식 프로필 보기 ↗"}</span> : <img src={character.voiceImage} alt={character.voice + " 프로필 사진"} onError={() => setFailed(true)} />}
   </a>;
 }
 function CharacterArt({
@@ -1699,7 +1783,9 @@ function Editor({
   session,
   seek,
   notify,
+  title,
 }: {
+  title: Title;
   drawn: Drawn | null;
   regions: Region[];
   setRegions: (r: Region[]) => void;
@@ -1709,7 +1795,8 @@ function Editor({
   notify: (s: string) => void;
 }) {
   const [draft, setDraft] = useState<Region>({
-      characterId: "usagi",
+      characterId: itemsOf(title.id)[0].id,
+      video: title.video,
       startTime: 0,
       endTime: 5,
       boundingBox: { x: 0.1, y: 0.1, width: 0.3, height: 0.5 },
@@ -1720,6 +1807,7 @@ function Editor({
     if (drawn) {
       setDraft((d) => ({
         ...d,
+        video: title.video,
         startTime: Math.round(drawn.time * 100) / 100,
         endTime: Math.round((drawn.time + 1) * 100) / 100,
         boundingBox: drawn.box,
@@ -1772,9 +1860,9 @@ function Editor({
               setDraft({ ...draft, characterId: e.target.value })
             }
           >
-            {characters.map((c) => (
+            {itemsOf(title.id).map((c) => (
               <option key={c.id} value={c.id}>
-                {c.name}
+                {c.name} · {kindLabel[c.kind]}
               </option>
             ))}
           </select>

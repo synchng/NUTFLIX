@@ -84,6 +84,9 @@ test("real sessions synchronize reviewed scenes throughout the video", async () 
     (await ack(phone, "join", { id: session.id, token: session.remoteToken }))
       .ok,
   );
+  const onChiikawa = event(phone, "state", (s) => s.video === "h0vBWdZf2l0");
+  host.emit("video", "h0vBWdZf2l0");
+  await onChiikawa;
   for (const [time, pointer, id] of [
     [5, { x: 0.6, y: 0.48 }, "chiikawa"],
     [20, { x: 0.3, y: 0.46 }, "rakko"],
@@ -116,6 +119,9 @@ test("real sessions synchronize reviewed scenes throughout the video", async () 
 test("selection outside targets has explicit fallback without false recognition", async () => {
   const host = await connect();
   await ack(host, "create", null);
+  const onChiikawa = event(host, "state", (s) => s.video === "h0vBWdZf2l0");
+  host.emit("video", "h0vBWdZf2l0");
+  await onChiikawa;
   const timed = event(host, "state", (s) => s.time === 15);
   host.emit("time", 15);
   await timed;
@@ -125,6 +131,25 @@ test("selection outside targets has explicit fallback without false recognition"
   const chosen = event(host, "selected");
   host.emit("choose-character", "usagi");
   assert.equal(await chosen, "usagi");
+});
+test("the session follows the TV's title, and only the host can switch it", async () => {
+  const host = await connect(), phone = await connect();
+  const s = await ack(host, "create", null);
+  await ack(phone, "join", { id: s.id, token: s.remoteToken });
+  const timed = event(phone, "state", (st) => st.time === 15);
+  host.emit("time", 15);
+  await timed;
+  // Mr. Sunshine is the default title: the centre of the 0:15 shot is Eugene Choi.
+  let chosen = event(phone, "selected");
+  phone.emit("select");
+  assert.equal(await chosen, "eugene");
+  phone.emit("video", "h0vBWdZf2l0"); // ignored: phones cannot change the title
+  const switched = event(phone, "state", (st) => st.video === "h0vBWdZf2l0");
+  host.emit("video", "h0vBWdZf2l0");
+  await switched;
+  const miss = event(phone, "selection-miss");
+  phone.emit("select");
+  await miss;
 });
 test("session tokens and annotation validation reject unauthorized changes", async () => {
   const host = await connect(),

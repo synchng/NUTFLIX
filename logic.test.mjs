@@ -1,8 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { activeRegions, hit, validRegions } from "./src/logic.js";
+import { activeRegions, hit, validRegions, VIDEOS, characterIds } from "./src/logic.js";
+const C = VIDEOS.chiikawa, S = VIDEOS.sunshine;
 const region = {
   characterId: "usagi",
+  video: C,
   startTime: 1,
   endTime: 5,
   boundingBox: { x: 0.1, y: 0.1, width: 0.2, height: 0.2 },
@@ -12,13 +14,13 @@ const region = {
   ],
 };
 test("time-gated regions and interpolated coordinates", () => {
-  assert.equal(activeRegions([region], 0).length, 0);
-  assert.equal(activeRegions([region], 6).length, 0);
-  assert.ok(Math.abs(activeRegions([region], 3)[0].boundingBox.x - 0.3) < 1e-8);
+  assert.equal(activeRegions([region], 0, C).length, 0);
+  assert.equal(activeRegions([region], 6, C).length, 0);
+  assert.ok(Math.abs(activeRegions([region], 3, C)[0].boundingBox.x - 0.3) < 1e-8);
 });
 test("mouse and remote share normalized hit testing", () => {
-  assert.equal(hit(activeRegions([region], 3), { x: 0.4, y: 0.2 }), "usagi");
-  assert.equal(hit(activeRegions([region], 3), { x: 0.9, y: 0.9 }), null);
+  assert.equal(hit(activeRegions([region], 3, C), { x: 0.4, y: 0.2 }), "usagi");
+  assert.equal(hit(activeRegions([region], 3, C), { x: 0.9, y: 0.9 }), null);
 });
 test("reject invalid annotations and out-of-frame bounds", () => {
   assert.ok(validRegions([region]));
@@ -47,25 +49,42 @@ test("timeline is valid and covers all five episodes and the credits", () => {
     [140, "rakko"], [170, "chiikawa"], [220, "rakko"], [255, "fugu"], [275, "usagi"],
     [305, "chiikawa"], [330, "hachiware"],
   ])
-    assert.ok(activeRegions(timeline, time).some((r) => r.characterId === id), `${id} at ${time}`);
+    assert.ok(activeRegions(timeline, time, C).some((r) => r.characterId === id), `${id} at ${time}`);
 });
 test("empty shots do not fabricate named characters", () => {
   for (const time of [15, 65, 115, 125, 180, 225, 245, 285, 310])
-    assert.equal(activeRegions(timeline, time).length, 0, `empty shot ${time}`);
+    assert.equal(activeRegions(timeline, time, C).length, 0, `empty shot ${time}`);
 });
 test("centers of all reviewed character regions resolve to the expected character", () => {
-  for (const time of new Set(timeline.map((r) => (r.startTime + r.endTime) / 2)))
-    for (const region of activeRegions(timeline, time)) {
+  for (const { video, startTime, endTime } of timeline) {
+    const time = (startTime + endTime) / 2;
+    for (const region of activeRegions(timeline, time, video)) {
       const b = region.boundingBox;
       assert.equal(
-        hit(activeRegions(timeline, time), { x: b.x + b.width / 2, y: b.y + b.height / 2 }),
+        hit(activeRegions(timeline, time, video), { x: b.x + b.width / 2, y: b.y + b.height / 2 }),
         region.characterId,
         `${region.characterId} center at ${time}`,
       );
     }
+  }
 });
-test("every character of the video can be selected somewhere", () => {
-  for (const id of ["chiikawa", "hachiware", "usagi", "rakko", "fugu"])
+test("Mr. Sunshine: named opening shots, props and the hotel are where they were reviewed", () => {
+  for (const [time, id] of [
+    [15, "eugene"], [15, "cap"], [19, "aeshin"], [21.5, "dongmae"], [25, "hina"], [30, "heeseong"], [30, "tophat"],
+    [40, "pistol"], [174, "rifle"], [342.5, "rifle"], [388.5, "glory"], [570, "bouquet"], [600, "pistol"], [630, "watch"],
+  ])
+    assert.ok(activeRegions(timeline, time, S).some((r) => r.characterId === id), `${id} at ${time}`);
+  // People are only marked where the actor's name is on screen; later shots stay unmarked.
+  for (const time of [100, 270, 315, 460, 680])
+    assert.equal(activeRegions(timeline, time, S).length, 0, `empty shot ${time}`);
+});
+test("regions only answer for their own video", () => {
+  assert.ok(activeRegions(timeline, 5, C).length > 0);
+  assert.equal(activeRegions(timeline, 5, S).length, 0);
+  assert.equal(validRegions([{ ...region, video: "not-a-video" }]), false);
+});
+test("every item can be selected somewhere", () => {
+  for (const id of characterIds)
     assert.ok(timeline.some((r) => r.characterId === id), id);
   assert.equal(validRegions([{ ...region, characterId: "megumi" }]), false);
 });

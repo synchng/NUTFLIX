@@ -1,9 +1,15 @@
 export const clamp = (n) => Math.max(0, Math.min(1, n));
-export const VIDEO = "h0vBWdZf2l0";
-export const characterIds = ["chiikawa", "hachiware", "usagi", "rakko", "fugu"];
-export function activeRegions(regions, time) {
+export const VIDEOS = { sunshine: "4YTXB5qkGzI", chiikawa: "h0vBWdZf2l0" };
+export const characterIds = [
+  "chiikawa", "hachiware", "usagi", "rakko", "fugu",
+  "eugene", "aeshin", "dongmae", "hina", "heeseong",
+  "cap", "tophat", "rifle", "pistol", "bouquet", "watch", "glory",
+];
+const videoIds = Object.values(VIDEOS);
+// Each region belongs to one video; only the playing video's regions can be selected.
+export function activeRegions(regions, time, video) {
   return regions
-    .filter((r) => time >= r.startTime - 1 / 60 && time <= r.endTime + 1 / 60)
+    .filter((r) => r.video === video && time >= r.startTime - 1 / 60 && time <= r.endTime + 1 / 60)
     .map((r) => {
       const keys = [...(r.keyframes || [])].sort((a, b) => a.time - b.time);
       let box = r.boundingBox;
@@ -53,6 +59,7 @@ export function validRegions(v) {
       (r) =>
         r && typeof r === "object" &&
         characterIds.includes(r.characterId) &&
+        videoIds.includes(r.video) &&
         Number.isFinite(r.startTime) &&
         r.startTime >= 0 &&
         Number.isFinite(r.endTime) &&
