@@ -25,7 +25,6 @@ import {
   Check,
   Link,
   Radio,
-  SkipForward,
 } from "lucide-react";
 import {
   activeRegions,
@@ -34,8 +33,10 @@ import {
   validRegions,
   type Region,
 } from "./logic.js";
-import { characters, works, official, actorSource, CHIIKAWA, sameVoice, episodes, koVoice, koActors, koFeatured } from "./data";
-import { BrowseHome, TitleDetails, WorkDetails, KoWorkDetails } from "./BrowseHome";
+import { characters, official, actors, episode } from "./data";
+import { BrowseHome, TitleDetails } from "./BrowseHome";
+import { WorkClip } from "./WorkClip";
+import { workInfo } from "./workInfo";
 import { Modal } from "./Modal";
 import { RemoteCursor, remoteInputActive } from "./RemoteCursor";
 import "./style.css";
@@ -52,6 +53,7 @@ type Session = { id: string; hostToken: string; remoteToken: string };
 type State = {
   pointer: Point;
   time: number;
+  playing?: boolean;
   selected: string | null;
   hover: string | null;
   connected: boolean;
@@ -91,37 +93,16 @@ function App() {
   );
   const viewRef = useRef(view);
   viewRef.current = view;
-  const [workDetail, setWorkDetail] = useState<number | null>(null);
-  const [video, setVideo] = useState(CHIIKAWA);
   const [upNextDismissed, setUpNextDismissed] = useState(false);
   const [upNextLeft, setUpNextLeft] = useState(5);
-  useEffect(() => setUpNextDismissed(false), [video]);
-  const videoRef = useRef(video);
-  videoRef.current = video;
-  const watchingWork = works.find((w) => w.video === video);
-  const watchingKo = koFeatured.find((f) => f.video === video);
-  const [koDetail, setKoDetail] = useState<number | null>(null);
-  const openActor = (actor: string) => {
-    const c = characters.find((c) => koVoice(c) === actor);
-    if (!c) return;
-    // Open straight on the voice step (choose-character's echo would reset it).
-    setKoDetail(null);
-    setLocalSelected(c.id);
+  // Home voice-actor shelf: open that character's panel straight on the voice step
+  // (choose-character's echo would reset the step).
+  const openActor = (id: string) => {
+    setLocalSelected(id);
     setDetail("voice");
     setLibraryOpen(false);
     setResultOpen(true);
   };
-  // Chiikawa episodes in order, then the other titles' videos.
-  const playlist = [
-    ...episodes.map((e) => ({ video: e.video, title: "치이카와", label: `${e.number}화 · ${e.title}`, credits: e.credits })),
-    ...works.map((w) => ({ video: w.video, title: w.name, label: w.videoLabel, credits: w.credits })),
-    // Featured PVs have no marked ending: the up-next card appears once they finish.
-    ...koFeatured.map((f) => ({ video: f.video, title: f.title, label: f.videoLabel, credits: Infinity })),
-  ];
-  const current = playlist.findIndex((p) => p.video === video);
-  const following = playlist[current + 1];
-  const next = following?.title === playlist[current].title ? following : undefined;
-  const episode = episodes.find((e) => e.video === video) || episodes.find((e) => e.video === CHIIKAWA)!;
   const [titleOpen, setTitleOpen] = useState(false),
     [pairOpen, setPairOpen] = useState(false),
     [brightnessOpen, setBrightnessOpen] = useState(false),
@@ -136,7 +117,7 @@ function App() {
   const [resume, setResume] = useState(() => {
     try {
       const t = Number(localStorage.getItem("point-resume"));
-      return Number.isFinite(t) ? Math.max(0, Math.min(90, t)) : 0;
+      return Number.isFinite(t) ? Math.max(0, Math.min(330, t)) : 0;
     } catch {
       return 0;
     }
@@ -145,8 +126,8 @@ function App() {
       params.get("view") === "watch" ? resume : null,
     ),
     lastResumeSave = useRef(-1);
-  const overlayRef = useRef({ titleOpen, pairOpen, workDetail, koDetail: null as number | null });
-  overlayRef.current = { titleOpen, pairOpen, workDetail, koDetail };
+  const overlayRef = useRef({ titleOpen, pairOpen });
+  overlayRef.current = { titleOpen, pairOpen };
   const toggleSaved = () =>
     setSaved((previous) => {
       const next = !previous;
@@ -199,13 +180,16 @@ function App() {
   );
   const [resultOpen, setResultOpen] = useState(false);
   const [resultMinimized, setResultMinimized] = useState(false);
-  // TV side of a phone selection: a small shared card; the detail lives on the phone.
-  const [tvChip, setTvChip] = useState<{ id: string; at: number } | null>(null);
+  const [allWorks, setAllWorks] = useState(false);
+  // A profile work opened from the voice step; its clip pauses the episode so audio never overlaps.
+  const [openWork, setOpenWork] = useState<{ title: string; role: string } | null>(null);
+  // TV side of a phone selection: only a brief check where the pointer was; the detail lives on the phone.
+  const [pulse, setPulse] = useState<{ x: number; y: number; at: number } | null>(null);
   useEffect(() => {
-    if (!tvChip) return;
-    const t = setTimeout(() => setTvChip(null), 6000);
+    if (!pulse) return;
+    const t = setTimeout(() => setPulse(null), 800);
     return () => clearTimeout(t);
-  }, [tvChip]);
+  }, [pulse]);
   const resultOpenRef = useRef(resultOpen);
   resultOpenRef.current = resultOpen;
   // Clicking anywhere outside the panel closes it. The video layer is left out:
@@ -240,13 +224,12 @@ function App() {
     [explore, setExplore] = useState(true),
     [localSelected, setLocalSelected] = useState<string | null>(null),
     [detail, setDetail] = useState("character"),
-    [work, setWork] = useState(0),
     [qr, setQr] = useState(""),
     [base, setBase] = useState(location.origin),
     [duration, setDuration] = useState(0),
     [speed, setSpeed] = useState(() => { try { const n = Number(localStorage.getItem('point-remote-speed')); return n >= .3 && n <= 2 ? n : 1; } catch { return 1; } }),
     [sensor, setSensor] = useState(false);
-  useEffect(() => { setResultMinimized(false); }, [localSelected, libraryOpen, resultOpen]);
+  useEffect(() => { setResultMinimized(false); setAllWorks(false); }, [localSelected, libraryOpen, resultOpen]);
   const remoteInfo = useRef<HTMLElement>(null);
   useEffect(() => {
     if (!remote || !resultOpen) return;
@@ -256,6 +239,23 @@ function App() {
   const speedRef = useRef(speed);
   speedRef.current = speed;
   const [remoteSettings, setRemoteSettings] = useState(false);
+  // Characters this phone has found, newest first.
+  const [searchLog, setSearchLog] = useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem('point-remote-history') || '[]').filter((id: string) => characters.some((c) => c.id === id)); } catch { return []; }
+  });
+  useEffect(() => { try { localStorage.setItem('point-remote-history', JSON.stringify(searchLog)); } catch {} }, [searchLog]);
+  // Phone: a selection first shows a short preview sheet over the touchpad; details open from it.
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const openDetail = () => {
+    setDetail("character");
+    setResultOpen(true);
+    history.pushState({ remoteDetail: true }, "", location.href); // the phone's back button returns to the sheet
+  };
+  const closeDetail = () => {
+    if (history.state?.remoteDetail) history.back(); // popstate closes the detail
+    else setResultOpen(false);
+    window.scrollTo({ top: 0 });
+  };
   const touches = useRef(new Map<number, Point>());
   const tapStart = useRef<{ x: number; y: number; time: number; moved: boolean } | null>(null);
   const player = useRef<any>(null),
@@ -264,11 +264,8 @@ function App() {
     orientation = useRef<{ a: number; b: number } | null>(null),
     sensorCleanup = useRef<(() => void) | null>(null),
     lastSend = useRef(0);
-  const enterWatch = (time: number, next = CHIIKAWA) => {
-    const switching = next !== videoRef.current;
-    setVideo(next);
-    videoRef.current = next;
-    socket.emit("video", next);
+  const enterWatch = (time: number) => {
+    setUpNextDismissed(false);
     setView("watch");
     setFullscreen(true);
     setTitleOpen(false);
@@ -281,11 +278,8 @@ function App() {
     history.pushState({ view: "watch" }, "", "/?view=watch");
     if (ready) {
       setTimeout(() => {
-        if (switching) player.current?.loadVideoById?.(next, time);
-        else {
-          player.current?.seekTo?.(time, true);
-          player.current?.playVideo?.();
-        }
+        player.current?.seekTo?.(time, true);
+        player.current?.playVideo?.();
       }, 60);
     } else pendingPlay.current = time;
   };
@@ -329,20 +323,10 @@ function App() {
     setResultOpen(true);
     socket.emit("choose-character", id);
   };
-  const showWork = (index: number) => {
-    if (remote) {
-      setWork(index);
-      setDetail("work");
-      return;
-    }
-    setTitleOpen(false);
-    setResultOpen(false);
-    setWorkDetail(index);
-  };
   const skip = (delta: number) => {
     const time = player.current?.getCurrentTime?.() || 0;
     player.current?.seekTo?.(
-      Math.max(0, Math.min(duration || 91, time + delta)),
+      Math.max(0, Math.min(duration || 330, time + delta)),
       true,
     );
     wakeControls();
@@ -433,17 +417,20 @@ function App() {
       setLibraryOpen(true); setResultOpen(true);
     });
     socket.on("selected", (id: string, meta?: {target: string}) => {
-      if (remote && meta?.target === "host") { setResultOpen(false); setLibraryOpen(false); return; }
+      if (remote && meta?.target === "host") { setResultOpen(false); setLibraryOpen(false); setSheetOpen(false); return; }
       if (!remote && meta?.target === "remote") {
         setResultOpen(false);
-        setTvChip({ id, at: Date.now() });
+        setPulse({ ...pointer.current, at: Date.now() });
         return;
       }
       setLocalSelected(id);
+      if (remote) setSearchLog((h) => [id, ...h.filter((x) => x !== id)].slice(0, 8));
       setDetail("character");
       setLibraryOpen(false);
       setQuery("");
-      setResultOpen(true);
+      // The phone updates the one preview sheet (never stacks a new one); the PC opens its panel.
+      if (remote) setSheetOpen(true);
+      else setResultOpen(true);
       navigator.vibrate?.(40);
     });
     socket.on("play", () => {
@@ -492,15 +479,16 @@ function App() {
     const init = () => {
       if (disposed) return;
       player.current = new (window as any).YT.Player("youtube", {
-        videoId: "JXeE6pFSBoI",
+        videoId: episode.video,
         playerVars: { playsinline: 1, controls: 0, rel: 0, origin: location.origin },
         events: {
           onStateChange: (e: any) => {
             setPlaying(e.data === 1);
+            socket.emit("playing", e.data === 1);
             setPlayerState(e.data);
             if (e.data === 1) wakeControls();
             if (e.data === 2 || e.data === 0) setControlsVisible(true);
-            if ((e.data === 2 || e.data === 0) && videoRef.current === CHIIKAWA) {
+            if (e.data === 2 || e.data === 0) {
               const t = player.current?.getCurrentTime?.() || 0;
               setResume(t);
               try {
@@ -515,19 +503,15 @@ function App() {
             else player.current.unMute();
             setReady(true);
             if (pendingPlay.current !== null) {
-              if (videoRef.current !== CHIIKAWA)
-                player.current.loadVideoById(videoRef.current, pendingPlay.current);
-              else {
-                player.current.seekTo(pendingPlay.current, true);
-                player.current.playVideo();
-              }
+              player.current.seekTo(pendingPlay.current, true);
+              player.current.playVideo();
               pendingPlay.current = null;
             }
             setDuration(player.current.getDuration());
             timer = setInterval(() => {
               const t = player.current?.getCurrentTime?.() || 0;
               socket.emit("time", t);
-              if (player.current?.getPlayerState?.() === 1 && videoRef.current === CHIIKAWA) {
+              if (player.current?.getPlayerState?.() === 1) {
                 setResume(t);
                 const second = Math.floor(t);
                 if (second !== lastResumeSave.current && second % 5 === 0) {
@@ -593,12 +577,12 @@ function App() {
       return () => clearTimeout(t);
     }
   }, [notice]);
-  // Netflix-style up next: appears when the ending starts and plays the next video
-  // after a 5-second countdown that only runs while the video plays.
+  // Netflix-style ending card: appears when the credits start and, after a 5-second
+  // countdown that only runs while the video plays, opens the title's detail page.
   const UP_NEXT_SECONDS = 5;
   const showUpNext =
     view === "watch" && ready && !editor &&
-    (playerState === 0 || (state.time >= playlist[current].credits && !upNextDismissed));
+    (playerState === 0 || (state.time >= episode.credits && !upNextDismissed));
   useEffect(() => {
     if (!showUpNext || !playing) {
       if (!showUpNext) setUpNextLeft(UP_NEXT_SECONDS);
@@ -608,23 +592,18 @@ function App() {
     return () => clearInterval(t);
   }, [showUpNext, playing]);
   const goUpNext = () => {
-    if (next) return enterWatch(0, next.video);
     player.current?.pauseVideo?.();
     setUpNextDismissed(true);
-    if (watchingWork) setWorkDetail(works.indexOf(watchingWork));
-    else if (watchingKo) setKoDetail(koFeatured.indexOf(watchingKo));
-    else setTitleOpen(true);
+    setTitleOpen(true);
   };
   useEffect(() => {
     if (showUpNext && upNextLeft <= 0) goUpNext();
   }, [upNextLeft]);
-  const chipCharacter = tvChip && view === "watch" ? characters.find((c) => c.id === tvChip.id) : undefined;
-  const active = activeRegions(regions, state.time, video),
+  const active = activeRegions(regions, state.time),
     hover = hit(active, state.pointer),
     selected = characters.find(
       (c) => c.id === (localSelected || state.selected),
     );
-  const chipBox = chipCharacter && active.find((r) => r.characterId === chipCharacter.id)?.boundingBox;
   const select = () => {
     if (explore) socket.emit("select", { target: remote || remoteInputActive ? "remote" : "host" });
   };
@@ -694,11 +673,9 @@ function App() {
     const key = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        if (overlayRef.current.titleOpen || overlayRef.current.pairOpen || overlayRef.current.workDetail !== null || overlayRef.current.koDetail !== null) {
+        if (overlayRef.current.titleOpen || overlayRef.current.pairOpen) {
           setTitleOpen(false);
           setPairOpen(false);
-          setWorkDetail(null);
-          setKoDetail(null);
           return;
         }
         setBrightnessOpen(false);
@@ -746,9 +723,7 @@ function App() {
     if (
       !fullscreen &&
       !titleOpen &&
-      !pairOpen &&
-      workDetail === null &&
-      koDetail === null
+      !pairOpen
     )
       return;
     const previous = document.body.style.overflow;
@@ -756,7 +731,7 @@ function App() {
     return () => {
       document.body.style.overflow = previous;
     };
-  }, [fullscreen, titleOpen, pairOpen, workDetail, koDetail]);
+  }, [fullscreen, titleOpen, pairOpen]);
   useEffect(() => {
     if (!brightnessOpen) return;
     const dismiss = (event: PointerEvent) => {
@@ -765,11 +740,6 @@ function App() {
     document.addEventListener('pointerdown', dismiss);
     return () => document.removeEventListener('pointerdown', dismiss);
   }, [brightnessOpen]);
-  // While watching, search the cast of the title on screen.
-  const titleCast =
-    view === "watch"
-      ? characters.filter((c) => (c.work ?? -1) === (watchingWork ? works.indexOf(watchingWork) : -1))
-      : characters;
   const library = (
     <div className="character-library">
       <div className="eyebrow">CHARACTERS</div>
@@ -793,23 +763,23 @@ function App() {
         />
       </label>
       <div className="character-results">
-        {titleCast
+        {characters
           .filter((c) =>
-            (c.name + c.jp + c.voice + c.voiceJp + (c.koName ?? "") + (koVoice(c, video) ?? "")).includes(query.trim()),
+            (c.name + c.jp + c.voice + c.voiceJp).includes(query.trim()),
           )
           .map((c) => (
             <button key={c.id} onClick={() => chooseCharacter(c.id)}>
               <CharacterArt character={c} compact />
               <span>
                 <strong>{c.name}</strong>
-                <small>{koVoice(c, video) ?? c.voice}</small>
+                <small>{c.voice}</small>
               </span>
               <ArrowUpRight size={17} />
             </button>
           ))}
       </div>
-      {!titleCast.some((c) =>
-        (c.name + c.jp + c.voice + c.voiceJp + (c.koName ?? "") + (koVoice(c, video) ?? "")).includes(query.trim()),
+      {!characters.some((c) =>
+        (c.name + c.jp + c.voice + c.voiceJp).includes(query.trim()),
       ) && <p>검색 결과가 없어요. 다른 이름을 입력해 보세요.</p>}
       <p className="small muted">
         영상 속 직접 선택은 장면별로 등록한 위치를 사용합니다. 목록에서는 시간에
@@ -817,183 +787,86 @@ function App() {
       </p>
     </div>
   );
-  const actorWorks = selected ? sameVoice(selected) : [];
-  // Chiikawa plays as the Korean dub; its Japanese cast still links to other titles.
-  const ko = selected && koVoice(selected, video);
-  const koRoles = selected && ko ? characters.filter((d) => d.id !== selected.id && koVoice(d, video) === ko) : [];
-  const otherWorksTitle = selected ? `${ko ? "일본어판 성우 " : ""}${selected.voice}의 다른 작품` : "";
-  const workButtons = (skip = -1) =>
-    actorWorks
-      .filter((d) => d.work !== skip)
-      .map((d) => (
-        <button
-          className="list-button"
-          key={d.id}
-          onClick={() => {
-            if (d.work !== undefined) return showWork(d.work);
-            if (remote) {
-              setLocalSelected(d.id);
-              setDetail("character");
-              return;
-            }
-            setResultOpen(false);
-            setTitleOpen(true);
-          }}
-        >
-          <span>
-            <small>{d.name}</small>
-            {d.work === undefined ? "치이카와" : works[d.work].name}
-          </span>
-          <ArrowUpRight size={18} />
-        </button>
-      ));
+  const actor = selected && actors[selected.voiceJp];
+  const profileWorks = actor?.works ?? [];
   const infoPanel = (
     <>
       {libraryOpen ? (
         library
       ) : selected ? (
         <div className={"detail detail-" + detail} key={selected.id + detail}>
-          <button
-            className="text-button"
-            onClick={() => setDetail(detail === "work" ? "voice" : "character")}
-          >
+          <button className="text-button" onClick={() => setDetail("character")}>
             <ChevronLeft size={15} />
             {detail === "character" ? "캐릭터 정보" : "뒤로"}
           </button>
-          {detail === "character" && (
+          {detail === "character" ? (
             <CharacterArt key={selected.id} character={selected} />
+          ) : (
+            <ActorPhoto key={selected.id} character={selected} />
           )}
-          {detail === "voice" && !ko && <ActorPhoto key={selected.id} character={selected} />}
-          {detail === "work" && (
-            <img
-              className="detail-work-image"
-              src={works[work].image}
-              alt={works[work].name}
-            />
-          )}
-          <div className="eyebrow">
-            {detail === "character"
-              ? "CHARACTER"
-              : detail === "voice"
-                ? "VOICE ACTOR"
-                : "ANIMATION"}
-          </div>
-          <h2>
-            {detail === "character"
-              ? selected.name
-              : detail === "voice"
-                ? ko ?? selected.voice
-                : works[work].name}
-          </h2>
-          <p className="jp">
-            {detail === "character"
-              ? selected.jp + (selected.koName ? ` · 한국어판 「${selected.koName}」` : "")
-              : detail === "voice"
-                ? ko
-                  ? `한국어 더빙 · 일본어판 ${selected.voice} (${selected.voiceJp})`
-                  : selected.voiceJp
-                : works[work].jp}
-          </p>
+          <div className="eyebrow">{detail === "character" ? "CHARACTER" : "VOICE ACTOR"}</div>
+          <h2>{detail === "character" ? selected.name : selected.voice}</h2>
+          <p className="jp">{detail === "character" ? selected.jp : selected.voiceJp}</p>
           {detail === "character" ? (
             <>
               <p>{selected.description}</p>
-              <button
-                className="list-button"
-                onClick={() => setDetail("voice")}
-              >
+              <button className="list-button" onClick={() => setDetail("voice")}>
                 <span>
-                  <small>{ko ? "담당 성우 · 한국어 더빙" : "담당 성우"}</small>
-                  {ko ?? selected.voice}
+                  <small>담당 성우 · 일본어판</small>
+                  {selected.voice}
                 </span>
                 <ArrowUpRight size={20} />
               </button>
-              {actorWorks.length > 0 && (
-                <>
-                  <h3>{otherWorksTitle}</h3>
-                  {workButtons()}
-                </>
-              )}
               <a href={official} target="_blank" rel="noreferrer">
                 공식 캐릭터·캐스트 출처 ↗
               </a>
             </>
-          ) : detail === "voice" ? (
+          ) : (
             <>
               <p>
-                {ko
-                  ? `AniBox 한국어 더빙 캐스트예요.${koActors[ko]?.note ? " " + koActors[ko].note : ""}`
-                  : `${selected.voiceJp} · 일본어판 캐스트`}
+                {actor?.profile
+                  ? `${actor.agency} 소속 · 출연작은 소속사 공식 프로필 기준이에요.`
+                  : "공식 프로필을 찾지 못해, 이 영상 크레딧으로 확인한 배역만 보여 드려요."}
               </p>
-              {koRoles.length > 0 && (
+              <h3>
+                공식 프로필의 다른 출연작
+                {profileWorks.length > 0 && ` (${profileWorks.length})`}
+              </h3>
+              {profileWorks.length > 0 ? (
                 <>
-                  <h3>같은 한국어판 성우({ko})의 다른 캐릭터</h3>
-                  {koRoles.map((d) => (
-                    <button
-                      className="list-button"
-                      key={d.id}
-                      onClick={() => {
-                        setLocalSelected(d.id);
-                        setDetail("character");
-                      }}
-                    >
-                      <span>
-                        <small>치이카와</small>
-                        {d.koName ?? d.name}
-                      </span>
-                      <ArrowUpRight size={18} />
-                    </button>
-                  ))}
-                </>
-              )}
-              {ko && koActors[ko] && (
-                <>
-                  <h3>{ko} 성우의 다른 출연작</h3>
-                  <ul className="ko-works">
-                    {koActors[ko].works.map(([title, role]) => (
+                  <ul className="profile-works">
+                    {(allWorks ? profileWorks : profileWorks.slice(0, 8)).map(([title, role]) => (
                       <li key={title + role}>
-                        <small>{role}</small>
-                        {title}
+                        <button
+                          onClick={() => {
+                            if (!remote) player.current?.pauseVideo?.();
+                            setOpenWork({ title, role });
+                          }}
+                        >
+                          <small>{workInfo[title]?.ko.role ?? role}</small>
+                          {workInfo[title]?.ko.title ?? title}
+                          <em>{title}</em>
+                          <Play size={14} fill="currentColor" />
+                        </button>
                       </li>
                     ))}
                   </ul>
+                  {profileWorks.length > 8 && (
+                    <button className="text-button more-works" onClick={() => setAllWorks((v) => !v)}>
+                      {allWorks ? "접기" : `모두 보기 (${profileWorks.length})`}
+                    </button>
+                  )}
                 </>
-              )}
-              <h3>{ko ? otherWorksTitle : "다른 작품에서 만나기"}</h3>
-              {actorWorks.length > 0 ? (
-                workButtons()
               ) : (
                 <p className="muted">
-                  이 성우의 추가 출연작은 아직 등록되지 않았어요.
+                  {actor?.profile
+                    ? "공식 프로필에 치이카와 외의 출연작이 없어요."
+                    : "확인된 다른 출연작이 없어요."}
                 </p>
               )}
-              <a
-                href={ko ? koActors[ko]?.source ?? episodes.find((e) => e.dub[selected.id] === ko)?.video.replace(/^/, "https://www.youtube.com/watch?v=") : selected.voiceSource}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {ko ? (koActors[ko]?.source ? "성우 인터뷰 출처 ↗" : "크레딧이 나온 영상 ↗") : "공식 출처 ↗"}
+              <a href={actor?.profile ?? selected.voiceSource} target="_blank" rel="noreferrer">
+                {actor?.profile ? "공식 프로필 ↗" : "크레딧이 나온 영상 ↗"}
               </a>
-            </>
-          ) : (
-            <>
-              <p>{works[work].genre}</p>
-              <p>{works[work].summary}</p>
-              <div className="credit">
-                담당 캐릭터 <strong>{works[work].role}</strong>
-                <small>{works[work].roleJp}</small>
-              </div>
-              {actorWorks.some((d) => d.work !== work) && (
-                <>
-                  <h3>{otherWorksTitle}</h3>
-                  {workButtons(work)}
-                </>
-              )}
-              <a href={works[work].url} target="_blank" rel="noreferrer">
-                작품 공식 사이트 ↗
-              </a>
-              <p className="small muted">
-                스트리밍 제공 여부는 연결한 공식 사이트에서 확인해 주세요.
-              </p>
             </>
           )}
         </div>
@@ -1044,7 +917,23 @@ function App() {
   );
   return (
     <>
-      {!remote && state.connected && <RemoteCursor socket={socket} wake={wakeControls} />}
+      {!remote && state.connected && <RemoteCursor socket={socket} wake={wakeControls} target={!!hover && view === "watch"} />}
+      {openWork && selected &&
+        createPortal(
+          <Modal label={openWork.title + " 작품 상세"} onClose={() => setOpenWork(null)} className="title-modal work-modal">
+            <WorkClip
+              key={openWork.title}
+              title={openWork.title}
+              role={openWork.role}
+              character={selected}
+              onOpen={(title, role) => {
+                setOpenWork({ title, role });
+                for (const el of document.querySelectorAll(".work-modal, .work-modal .stream-modal")) el.scrollTo({ top: 0 });
+              }}
+            />
+          </Modal>,
+          !remote && view === "watch" && theater.current ? theater.current : document.body,
+        )}
       {remote && (
         <>
           <header>
@@ -1076,7 +965,7 @@ function App() {
           fullscreen && theater.current ? theater.current : document.body,
         )}
       {remote ? (
-        <main className="remote">
+        <main className={"remote" + (resultOpen ? " is-detail" : sheetOpen ? " has-sheet" : "")}>
           <div className="remote-heading">
             <div><div className="eyebrow">NUTFLIX REMOTE</div><h1>터치패드</h1></div>
             <button aria-label="리모컨 설정" onClick={() => setRemoteSettings(true)}><Settings2 size={22} /></button>
@@ -1118,9 +1007,16 @@ function App() {
             <p>{!joined ? "PC 연결을 기다리고 있어요" : sensor ? "휴대폰을 움직이고, 여기를 탭해 선택하세요" : "밀어서 이동하고, 톡 눌러 선택하세요"}</p>
             <small>{sensor ? "영상 속 캐릭터를 가리켜 보세요" : "홈 · 영상 · 정보 카드까지 조작할 수 있어요"}</small>
           </div>
-          <div className="remote-tools">
-            <button disabled={!joined} onClick={() => socket.emit("play")}><Play size={17} /> 재생 / 일시정지</button>
-            <button disabled={!joined} onClick={() => { calibration.current = orientation.current; point({ x: .5, y: .5 }); socket.emit('ui-center'); }}><Focus size={17} /> 포인터 중앙으로</button>
+          <div className="remote-play">
+            <button
+              disabled={!joined}
+              aria-label={state.playing ? "일시정지" : "재생"}
+              className={state.playing ? "is-playing" : ""}
+              onClick={() => { socket.emit("play"); navigator.vibrate?.(15); }}
+            >
+              {state.playing ? <Pause size={30} fill="currentColor" /> : <Play size={30} fill="currentColor" />}
+            </button>
+            <span>{!joined ? "연결 대기 중" : state.playing ? "재생 중 · 눌러서 일시정지" : "일시정지됨 · 눌러서 재생"}</span>
           </div>
           {remoteSettings && <Modal label="리모컨 설정" onClose={() => setRemoteSettings(false)} className="remote-settings-modal">
             <h2>리모컨 설정</h2>
@@ -1135,11 +1031,62 @@ function App() {
             <p>터치패드는 사이트 전체를 조작합니다. 기울기 센서는 영상 속 캐릭터를 가리킬 때 사용합니다.</p>
             <button className="wide" onClick={() => { calibration.current = orientation.current; point({x:.5,y:.5}); socket.emit('ui-center'); }}>포인터 기준점 재설정</button>
           </Modal>}
-          <button className="wide" onClick={openLibrary}>
-            <Search size={16} /> 캐릭터 직접 찾기
-          </button>
+          <section className="remote-history">
+            <div className="remote-history-head">
+              <h2>검색 기록</h2>
+              {searchLog.length > 0 && <button onClick={() => setSearchLog([])}>지우기</button>}
+            </div>
+            {searchLog.length ? (
+              <ul>
+                {searchLog.map((id) => {
+                  const c = characters.find((c) => c.id === id)!;
+                  return (
+                    <li key={id}>
+                      <button onClick={() => chooseCharacter(id)}>
+                        <img src={c.image} alt="" />
+                        <span><strong>{c.name}</strong><small>성우 {c.voice}</small></span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p>영상 속 캐릭터를 가리켜 선택하면 여기에 기록돼요.</p>
+            )}
+          </section>
+          {sheetOpen && selected && !resultOpen && (
+            <section
+              className="remote-sheet"
+              aria-label="선택한 캐릭터 미리보기"
+              onPointerDown={(e) => {
+                // Swipes start on the sheet only, so a drag on the touchpad never moves it; the release may land anywhere.
+                const start = e.clientY;
+                const end = (ev: PointerEvent) => {
+                  removeEventListener("pointerup", end);
+                  removeEventListener("pointercancel", end);
+                  if (ev.type !== "pointerup") return;
+                  if (ev.clientY - start < -40) openDetail();
+                  else if (ev.clientY - start > 40) setSheetOpen(false);
+                };
+                addEventListener("pointerup", end);
+                addEventListener("pointercancel", end);
+              }}
+            >
+              <div className="remote-sheet-grip" aria-hidden="true" />
+              <div className="remote-sheet-body" key={selected.id}>
+                <img src={selected.image} alt="" />
+                <div>
+                  <small>{episode.title}</small>
+                  <strong>{selected.name}</strong>
+                  <span>성우 {selected.voice}</span>
+                </div>
+                <button className="remote-sheet-close" aria-label="미리보기 닫기" onClick={() => setSheetOpen(false)}><X size={18} /></button>
+              </div>
+              <button className="remote-sheet-more" onClick={openDetail}>자세히 보기</button>
+            </section>
+          )}
           {resultOpen && <aside className="remote-information" ref={remoteInfo}>
-            <button className="wide remote-return" onClick={() => { setResultOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><ArrowLeft size={16} /> 터치패드로 돌아가기</button>
+            <button className="wide remote-return" onClick={closeDetail}><ArrowLeft size={16} /> 터치패드로 돌아가기</button>
             {infoPanel}
           </aside>}
         </main>
@@ -1150,7 +1097,7 @@ function App() {
               onPlay={enterWatch}
               onDetails={() => setTitleOpen(true)}
               onCharacter={chooseCharacter}
-              onKoWork={setKoDetail}
+              onActor={openActor}
               onPair={() => setPairOpen(true)}
               onSearch={openLibrary}
               onEdit={() => {
@@ -1197,8 +1144,8 @@ function App() {
                   <ArrowLeft size={30} />
                 </button>
                 <div>
-                  <strong>{(watchingWork ?? watchingKo) ? (watchingWork?.name ?? watchingKo!.title) : "치이카와"}</strong>
-                  <span>{watchingWork?.videoLabel ?? watchingKo?.videoLabel ?? `${episode.number}화 · ${episode.title}`}</span>
+                  <strong>{episode.title}</strong>
+                  <span>{episode.label}</span>
                 </div>
                 {editor && (
                   <button
@@ -1214,13 +1161,7 @@ function App() {
                 <button
                   aria-label="작품 상세 정보"
                   title="작품 상세 정보"
-                  onClick={() =>
-                    watchingWork
-                      ? setWorkDetail(works.indexOf(watchingWork))
-                      : watchingKo
-                        ? setKoDetail(koFeatured.indexOf(watchingKo))
-                        : setTitleOpen(true)
-                  }
+                  onClick={() => setTitleOpen(true)}
                 >
                   <ListVideo size={26} />
                 </button>
@@ -1375,35 +1316,16 @@ function App() {
                       )}
                     </div>
                   )}
-                  {chipCharacter && (
-                    <div
-                      key={tvChip!.at}
-                      className={"tv-chip" + (chipBox ? "" : " is-corner")}
-                      style={
-                        chipBox
-                          ? {
-                              // Above the character, or below it when it touches the top; kept inside the frame.
-                              left: `${Math.min(0.86, Math.max(0.14, chipBox.x + chipBox.width / 2)) * 100}%`,
-                              top: `${(chipBox.y < 0.2 ? Math.min(0.85, chipBox.y + chipBox.height) : chipBox.y) * 100}%`,
-                              transform: chipBox.y < .2 ? "translate(-50%, 10px)" : undefined,
-                            }
-                          : undefined
-                      }
-                      role="status"
-                    >
-                      <CharacterArt character={chipCharacter} compact />
-                      <span>
-                        <strong>{chipCharacter.name}</strong>
-                        <small>목소리 · {koVoice(chipCharacter, video) ?? chipCharacter.voice}</small>
-                        <em><Smartphone size={11} /> 자세한 정보는 휴대폰에서</em>
-                      </span>
+                  {pulse && view === "watch" && (
+                    <div key={pulse.at} className="select-pulse" style={{ left: `${pulse.x * 100}%`, top: `${pulse.y * 100}%` }} aria-hidden="true">
+                      <Check size={22} strokeWidth={3} />
                     </div>
                   )}
                   {showUpNext && (
                     <div className="next-up" onClick={(e) => e.stopPropagation()}>
                       <p>
-                        <small>{next ? "다음 화" : "마지막 영상이에요"}</small>
-                        {next ? `${next.title} · ${next.label}` : `${playlist[current].title} 상세 정보로 이동해요`}
+                        <small>이야기가 끝나가요</small>
+                        치이카와 상세 정보로 이동해요
                       </p>
                       <div>
                         {playerState !== 0 && (
@@ -1416,8 +1338,8 @@ function App() {
                             className="next-up-fill"
                             style={{ transform: `scaleX(${playerState === 0 ? 0 : (UP_NEXT_SECONDS - upNextLeft) / UP_NEXT_SECONDS})` }}
                           />
-                          {next ? <Play size={20} fill="currentColor" /> : <ListVideo size={20} />}
-                          {next ? "다음 화" : "상세 정보"}
+                          <ListVideo size={20} />
+                          상세 정보
                           {playerState !== 0 && playing && <small>{upNextLeft}초</small>}
                         </button>
                       </div>
@@ -1478,17 +1400,6 @@ function App() {
                       <RotateCw size={31} />
                       <small>10</small>
                     </button>
-                    {next && (
-                      <button
-                        className="player-icon"
-                        aria-label={`다음 영상: ${next.title} ${next.label}`}
-                        title={`다음 영상: ${next.title} · ${next.label}`}
-                        onClick={() => enterWatch(0, next.video)}
-                        disabled={!ready}
-                      >
-                        <SkipForward size={28} />
-                      </button>
-                    )}
                     <div className="player-volume">
                       <button
                         className="player-icon"
@@ -1527,7 +1438,7 @@ function App() {
                     </div>
                   </div>
                   <span className="playback-episode-title">
-                    치이카와 <span>강해져라 1편</span>
+                    치이카와 <span>{episode.label}</span>
                   </span>
                   <div className="player-feature-controls">
                     <button
@@ -1608,8 +1519,8 @@ function App() {
                 <div className="video-meta">
                   <div>
                     <span className="tag">지금 시청 중</span>
-                    <h2>먼작귀 · 강해져라 1편</h2>
-                    <p>51화 · YouTube · 한국어 더빙</p>
+                    <h2>치이카와 · {episode.label}</h2>
+                    <p>YouTube · 일본어 원어</p>
                   </div>
                   <button
                     aria-label="재생 또는 일시정지"
@@ -1623,7 +1534,6 @@ function App() {
                     drawn={drawn}
                     regions={regions}
                     setRegions={setRegions}
-                    video={video}
                     time={state.time}
                     session={session}
                     seek={(t) => {
@@ -1644,54 +1554,6 @@ function App() {
             createPortal(
               <div className="watch-stage show-result browse-glass">{glassPanel}</div>,
               document.body,
-            )}
-          {koDetail !== null &&
-            createPortal(
-              <Modal
-                label={koFeatured[koDetail].title + " 작품 상세"}
-                onClose={() => setKoDetail(null)}
-                className="title-modal"
-              >
-                <KoWorkDetails
-                  key={koDetail}
-                  index={koDetail}
-                  onPlay={(i) => {
-                    setKoDetail(null);
-                    enterWatch(0, koFeatured[i].video);
-                  }}
-                  onActor={openActor}
-                />
-              </Modal>,
-              view === "watch" && theater.current ? theater.current : document.body,
-            )}
-          {workDetail !== null &&
-            createPortal(
-              <Modal
-                label={works[workDetail].name + " 작품 상세"}
-                onClose={() => setWorkDetail(null)}
-                className="title-modal"
-              >
-                <WorkDetails
-                  key={workDetail}
-                  index={workDetail}
-                  onWork={setWorkDetail}
-                  onPlay={(i) => {
-                    setWorkDetail(null);
-                    enterWatch(0, works[i].video);
-                  }}
-                  onTitle={() => {
-                    setWorkDetail(null);
-                    setTitleOpen(true);
-                  }}
-                  onCharacter={(id) => {
-                    setWorkDetail(null);
-                    chooseCharacter(id);
-                  }}
-                />
-              </Modal>,
-              view === "watch" && theater.current
-                ? theater.current
-                : document.body,
             )}
           {titleOpen &&
             createPortal(
@@ -1833,7 +1695,6 @@ function Editor({
   drawn,
   regions,
   setRegions,
-  video,
   time,
   session,
   seek,
@@ -1842,7 +1703,6 @@ function Editor({
   drawn: Drawn | null;
   regions: Region[];
   setRegions: (r: Region[]) => void;
-  video: string;
   time: number;
   session: Session | null;
   seek: (t: number) => void;
@@ -1864,7 +1724,6 @@ function Editor({
         endTime: Math.round((drawn.time + 1) * 100) / 100,
         boundingBox: drawn.box,
         keyframes: [],
-        video: video === CHIIKAWA ? undefined : video,
       }));
       setIndex(-1);
     }

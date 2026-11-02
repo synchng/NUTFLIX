@@ -2,3359 +2,1112 @@
   {
     "characterId": "rakko",
     "startTime": 0,
-    "endTime": 3.5,
+    "endTime": 2,
     "boundingBox": {
-      "x": 0.36,
-      "y": 0.2,
-      "width": 0.29,
-      "height": 0.51
+      "x": 0.34,
+      "y": 0.28,
+      "width": 0.26,
+      "height": 0.44
     }
   },
   {
     "characterId": "chiikawa",
-    "startTime": 7.4,
-    "endTime": 11.7,
+    "startTime": 3,
+    "endTime": 7,
     "boundingBox": {
-      "x": 0.45,
-      "y": 0.31,
-      "width": 0.23,
-      "height": 0.43
-    },
-    "keyframes": [
-      {
-        "time": 7.4,
-        "boundingBox": {
-          "x": 0.45,
-          "y": 0.31,
-          "width": 0.22,
-          "height": 0.4
-        }
-      },
-      {
-        "time": 8.9,
-        "boundingBox": {
-          "x": 0.45,
-          "y": 0.31,
-          "width": 0.22,
-          "height": 0.4
-        }
-      },
-      {
-        "time": 11.7,
-        "boundingBox": {
-          "x": 0.48,
-          "y": 0.43,
-          "width": 0.22,
-          "height": 0.4
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 11.7,
-    "endTime": 15.1,
-    "boundingBox": {
-      "x": 0.04,
-      "y": 0.34,
-      "width": 0.54,
-      "height": 0.66
+      "x": 0.44,
+      "y": 0.1,
+      "width": 0.31,
+      "height": 0.75
     }
   },
   {
     "characterId": "chiikawa",
-    "startTime": 15.1,
-    "endTime": 19,
+    "startTime": 8,
+    "endTime": 12,
     "boundingBox": {
-      "x": 0.12,
-      "y": 0.18,
-      "width": 0.35,
-      "height": 0.62
-    },
-    "keyframes": [
-      {
-        "time": 15.1,
-        "boundingBox": {
-          "x": 0.12,
-          "y": 0.18,
-          "width": 0.35,
-          "height": 0.62
-        }
-      },
-      {
-        "time": 18.9,
-        "boundingBox": {
-          "x": 0.1,
-          "y": 0.13,
-          "width": 0.33,
-          "height": 0.66
-        }
-      }
-    ]
+      "x": 0.5,
+      "y": 0.36,
+      "width": 0.22,
+      "height": 0.44
+    }
   },
   {
-    "characterId": "chiikawa",
-    "startTime": 19,
-    "endTime": 20.6,
+    "characterId": "rakko",
+    "startTime": 18,
+    "endTime": 22,
     "boundingBox": {
-      "x": 0.05,
-      "y": 0.06,
-      "width": 0.66,
-      "height": 0.94
+      "x": 0.13,
+      "y": 0.25,
+      "width": 0.34,
+      "height": 0.42
     }
   },
   {
     "characterId": "chiikawa",
-    "startTime": 20.6,
-    "endTime": 25.3,
+    "startTime": 23,
+    "endTime": 27,
     "boundingBox": {
       "x": 0,
-      "y": 0.31,
-      "width": 0.37,
-      "height": 0.69
+      "y": 0.3,
+      "width": 0.38,
+      "height": 0.7
     }
   },
   {
     "characterId": "rakko",
-    "startTime": 20.6,
-    "endTime": 25.3,
+    "startTime": 23,
+    "endTime": 27,
     "boundingBox": {
-      "x": 0.46,
-      "y": 0.04,
-      "width": 0.28,
-      "height": 0.44
-    },
-    "keyframes": [
-      {
-        "time": 20.6,
-        "boundingBox": {
-          "x": 0.48,
-          "y": 0.04,
-          "width": 0.28,
-          "height": 0.44
-        }
-      },
-      {
-        "time": 22.9,
-        "boundingBox": {
-          "x": 0.46,
-          "y": 0.04,
-          "width": 0.28,
-          "height": 0.44
-        }
-      },
-      {
-        "time": 24.9,
-        "boundingBox": {
-          "x": 0.49,
-          "y": 0.48,
-          "width": 0.18,
-          "height": 0.31
-        }
-      },
-      {
-        "time": 25.3,
-        "boundingBox": {
-          "x": 0.49,
-          "y": 0.48,
-          "width": 0.18,
-          "height": 0.31
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 25.3,
-    "endTime": 27.7,
-    "boundingBox": {
-      "x": 0.14,
-      "y": 0,
-      "width": 0.84,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 27.7,
-    "endTime": 31.95,
-    "boundingBox": {
-      "x": 0.18,
-      "y": 0.4,
-      "width": 0.24,
-      "height": 0.5
-    },
-    "keyframes": [
-      {
-        "time": 27.7,
-        "boundingBox": {
-          "x": 0.18,
-          "y": 0.4,
-          "width": 0.18,
-          "height": 0.46
-        }
-      },
-      {
-        "time": 28.9,
-        "boundingBox": {
-          "x": 0.18,
-          "y": 0.4,
-          "width": 0.18,
-          "height": 0.46
-        }
-      },
-      {
-        "time": 30,
-        "boundingBox": {
-          "x": 0.18,
-          "y": 0.45,
-          "width": 0.24,
-          "height": 0.45
-        }
-      },
-      {
-        "time": 31.95,
-        "boundingBox": {
-          "x": 0.18,
-          "y": 0.45,
-          "width": 0.24,
-          "height": 0.45
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 29.1,
-    "endTime": 31.95,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.27,
-      "width": 0.25,
-      "height": 0.58
+      "x": 0.56,
+      "y": 0.55,
+      "width": 0.13,
+      "height": 0.25
     }
   },
   {
     "characterId": "usagi",
-    "startTime": 30.1,
-    "endTime": 31.95,
+    "startTime": 28,
+    "endTime": 32,
     "boundingBox": {
-      "x": 0.18,
-      "y": 0.08,
-      "width": 0.21,
-      "height": 0.36
+      "x": 0.19,
+      "y": 0.05,
+      "width": 0.15,
+      "height": 0.35
     }
   },
   {
     "characterId": "hachiware",
-    "startTime": 31.95,
-    "endTime": 35.2,
+    "startTime": 28,
+    "endTime": 32,
     "boundingBox": {
-      "x": 0.36,
-      "y": 0.4,
-      "width": 0.38,
+      "x": 0.31,
+      "y": 0.25,
+      "width": 0.19,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 28,
+    "endTime": 32,
+    "boundingBox": {
+      "x": 0.16,
+      "y": 0.45,
+      "width": 0.22,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 33,
+    "endTime": 37,
+    "boundingBox": {
+      "x": 0.56,
+      "y": 0.33,
+      "width": 0.19,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 38,
+    "endTime": 42,
+    "boundingBox": {
+      "x": 0.34,
+      "y": 0.05,
+      "width": 0.29,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 38,
+    "endTime": 42,
+    "boundingBox": {
+      "x": 0.53,
+      "y": 0.45,
+      "width": 0.31,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 43,
+    "endTime": 47,
+    "boundingBox": {
+      "x": 0,
+      "y": 0,
+      "width": 0.47,
+      "height": 0.9
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 43,
+    "endTime": 47,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0,
+      "width": 0.44,
       "height": 0.6
     }
   },
   {
-    "characterId": "hachiware",
-    "startTime": 35.2,
-    "endTime": 39.2,
-    "boundingBox": {
-      "x": 0.21,
-      "y": 0.35,
-      "width": 0.28,
-      "height": 0.49
-    },
-    "keyframes": [
-      {
-        "time": 35.2,
-        "boundingBox": {
-          "x": 0.21,
-          "y": 0.35,
-          "width": 0.28,
-          "height": 0.49
-        }
-      },
-      {
-        "time": 38.8,
-        "boundingBox": {
-          "x": 0.26,
-          "y": 0.35,
-          "width": 0.24,
-          "height": 0.49
-        }
-      },
-      {
-        "time": 39.2,
-        "boundingBox": {
-          "x": 0.26,
-          "y": 0.35,
-          "width": 0.24,
-          "height": 0.49
-        }
-      }
-    ]
-  },
-  {
     "characterId": "chiikawa",
-    "startTime": 35.2,
-    "endTime": 39.2,
+    "startTime": 48,
+    "endTime": 52,
     "boundingBox": {
-      "x": 0.56,
-      "y": 0.34,
-      "width": 0.24,
-      "height": 0.49
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 39.2,
-    "endTime": 43.4,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.07,
-      "width": 0.29,
-      "height": 0.63
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 39.2,
-    "endTime": 43.4,
-    "boundingBox": {
-      "x": 0.55,
-      "y": 0.43,
-      "width": 0.32,
+      "x": 0.38,
+      "y": 0.33,
+      "width": 0.18,
       "height": 0.57
     }
   },
   {
     "characterId": "rakko",
-    "startTime": 41.7,
-    "endTime": 43.4,
+    "startTime": 48,
+    "endTime": 52,
     "boundingBox": {
-      "x": 0.04,
-      "y": 0.72,
-      "width": 0.39,
-      "height": 0.28
-    }
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 43.4,
-    "endTime": 45.3,
-    "boundingBox": {
-      "x": 0.43,
-      "y": 0,
-      "width": 0.57,
-      "height": 0.71
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 43.4,
-    "endTime": 45.3,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.1,
-      "width": 0.57,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 43.4,
-    "endTime": 45.3,
-    "boundingBox": {
-      "x": 0.43,
-      "y": 0.77,
-      "width": 0.49,
-      "height": 0.23
-    }
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 45.3,
-    "endTime": 46.9,
-    "boundingBox": {
-      "x": 0.12,
-      "y": 0,
-      "width": 0.76,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 46.9,
-    "endTime": 50.3,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.4,
-      "width": 0.28,
-      "height": 0.6
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 46.9,
-    "endTime": 50.3,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.41,
-      "width": 0.28,
-      "height": 0.59
-    }
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 46.9,
-    "endTime": 50.3,
-    "boundingBox": {
-      "x": 0.62,
-      "y": 0.32,
-      "width": 0.37,
-      "height": 0.68
-    }
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 50.3,
-    "endTime": 53.1,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 0.31,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 50.3,
-    "endTime": 53.1,
-    "boundingBox": {
-      "x": 0.29,
-      "y": 0,
-      "width": 0.29,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 50.3,
-    "endTime": 53.1,
-    "boundingBox": {
-      "x": 0.66,
-      "y": 0,
-      "width": 0.34,
-      "height": 0.74
-    }
-  },
-  {
-    "characterId": "rakko",
-    "startTime": 55.2,
-    "endTime": 60,
-    "boundingBox": {
-      "x": 0.31,
-      "y": 0.04,
-      "width": 0.4,
-      "height": 0.84
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 55.2,
-    "endTime": 60,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.56,
-      "width": 0.4,
-      "height": 0.44
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 55.2,
-    "endTime": 60,
-    "boundingBox": {
-      "x": 0.62,
-      "y": 0.57,
-      "width": 0.38,
-      "height": 0.43
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 61.8,
-    "endTime": 69.5,
-    "boundingBox": {
-      "x": 0.93,
-      "y": 0.72,
-      "width": 0.07,
-      "height": 0.28
-    },
-    "keyframes": [
-      {
-        "time": 61.8,
-        "boundingBox": {
-          "x": 0.99,
-          "y": 0.72,
-          "width": 0.01,
-          "height": 0.28
-        }
-      },
-      {
-        "time": 62.2,
-        "boundingBox": {
-          "x": 0.92,
-          "y": 0.72,
-          "width": 0.08,
-          "height": 0.28
-        }
-      },
-      {
-        "time": 64,
-        "boundingBox": {
-          "x": 0.66,
-          "y": 0.72,
-          "width": 0.2,
-          "height": 0.28
-        }
-      },
-      {
-        "time": 66.4,
-        "boundingBox": {
-          "x": 0.66,
-          "y": 0.72,
-          "width": 0.2,
-          "height": 0.28
-        }
-      },
-      {
-        "time": 68.2,
-        "boundingBox": {
-          "x": 0.79,
-          "y": 0.72,
-          "width": 0.2,
-          "height": 0.28
-        }
-      },
-      {
-        "time": 69.5,
-        "boundingBox": {
-          "x": 0.99,
-          "y": 0.72,
-          "width": 0.01,
-          "height": 0.28
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 69.5,
-    "endTime": 77.8,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.73,
-      "width": 0.05,
-      "height": 0.27
-    },
-    "keyframes": [
-      {
-        "time": 69.5,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.73,
-          "width": 0.01,
-          "height": 0.27
-        }
-      },
-      {
-        "time": 70.6,
-        "boundingBox": {
-          "x": 0.06,
-          "y": 0.73,
-          "width": 0.2,
-          "height": 0.27
-        }
-      },
-      {
-        "time": 76.4,
-        "boundingBox": {
-          "x": 0.04,
-          "y": 0.73,
-          "width": 0.2,
-          "height": 0.27
-        }
-      },
-      {
-        "time": 77.8,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.73,
-          "width": 0.01,
-          "height": 0.27
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "usagi",
-    "startTime": 81.5,
-    "endTime": 83.4,
-    "boundingBox": {
-      "x": 0,
+      "x": 0.63,
       "y": 0.33,
-      "width": 0.22,
-      "height": 0.36
-    },
-    "keyframes": [
-      {
-        "time": 81.5,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.33,
-          "width": 0.01,
-          "height": 0.36
-        }
-      },
-      {
-        "time": 82.2,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.33,
-          "width": 0.22,
-          "height": 0.36
-        }
-      },
-      {
-        "time": 82.9,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.33,
-          "width": 0.22,
-          "height": 0.36
-        }
-      },
-      {
-        "time": 83.4,
-        "boundingBox": {
-          "x": 0,
-          "y": 0.33,
-          "width": 0.01,
-          "height": 0.36
-        }
-      }
-    ]
-  },
-  {
-    "characterId": "hachiware",
-    "startTime": 85,
-    "endTime": 90.7,
-    "boundingBox": {
-      "x": 0.13,
-      "y": 0.69,
-      "width": 0.2,
-      "height": 0.31
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "startTime": 85,
-    "endTime": 90.7,
-    "boundingBox": {
-      "x": 0.4,
-      "y": 0.72,
-      "width": 0.22,
-      "height": 0.28
-    }
-  },
-  {
-    "characterId": "usagi",
-    "startTime": 85,
-    "endTime": 90.7,
-    "boundingBox": {
-      "x": 0.69,
-      "y": 0.62,
-      "width": 0.2,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "megumi",
-    "video": "ruX3rIj3--w",
-    "startTime": 9.5,
-    "endTime": 10.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "megumi",
-    "video": "ruX3rIj3--w",
-    "startTime": 25.5,
-    "endTime": 26.5,
-    "boundingBox": {
-      "x": 0.02,
-      "y": 0,
-      "width": 0.96,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "megumi",
-    "video": "ruX3rIj3--w",
-    "startTime": 74.5,
-    "endTime": 75.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.6,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 0.5,
-    "endTime": 2.5,
-    "boundingBox": {
-      "x": 0.12,
-      "y": 0,
-      "width": 0.76,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 13.5,
-    "endTime": 14.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 16.5,
-    "endTime": 17.5,
-    "boundingBox": {
-      "x": 0.52,
-      "y": 0.05,
-      "width": 0.43,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 18.5,
-    "endTime": 19.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 23.5,
-    "endTime": 26.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 0.6,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 31.5,
-    "endTime": 32.5,
-    "boundingBox": {
-      "x": 0.18,
-      "y": 0.1,
-      "width": 0.28,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 45.5,
-    "endTime": 46.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 0.5,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 47.5,
-    "endTime": 48.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.58,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 48.5,
-    "endTime": 49.5,
-    "boundingBox": {
-      "x": 0.58,
-      "y": 0.1,
-      "width": 0.42,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 50.5,
-    "endTime": 51.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.6,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 53.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.5,
-      "width": 0.5,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 54.5,
-    "endTime": 55.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.4,
-      "width": 0.5,
-      "height": 0.6
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 56.5,
-    "endTime": 59.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 66.5,
-    "endTime": 67.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0,
-      "width": 0.75,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 71.5,
-    "endTime": 72.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "chiyo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 72.5,
-    "endTime": 73.5,
-    "boundingBox": {
-      "x": 0.72,
-      "y": 0.45,
-      "width": 0.2,
-      "height": 0.55
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 13.5,
-    "endTime": 14.5,
-    "boundingBox": {
-      "x": 0.72,
-      "y": 0,
-      "width": 0.28,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 14.5,
-    "endTime": 15.5,
-    "boundingBox": {
-      "x": 0.45,
-      "y": 0,
-      "width": 0.55,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 18.5,
-    "endTime": 21.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.2,
-      "width": 0.35,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 34.5,
-    "endTime": 35.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0,
-      "width": 0.7,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 35.5,
-    "endTime": 36.5,
-    "boundingBox": {
-      "x": 0.4,
-      "y": 0.05,
-      "width": 0.45,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 45.5,
-    "endTime": 46.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.25,
-      "width": 0.38,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 54.5,
-    "endTime": 55.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 82.5,
-    "endTime": 83.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.25,
-      "width": 0.33,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "kurumi",
-    "video": "UNjHxhljAck",
-    "startTime": 84.5,
-    "endTime": 86.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.1,
-      "width": 0.36,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 30.5,
-    "endTime": 31.5,
-    "boundingBox": {
-      "x": 0.16,
-      "y": 0.35,
-      "width": 0.24,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "slyms27PQJQ",
-    "startTime": 31.5,
-    "endTime": 33.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.2,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 31.5,
-    "endTime": 33.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.22,
-      "width": 0.2,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 31.5,
-    "endTime": 33.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.4,
-      "width": 0.22,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 33.5,
-    "endTime": 34.5,
-    "boundingBox": {
-      "x": 0.34,
-      "y": 0.1,
-      "width": 0.26,
-      "height": 0.68
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 33.5,
-    "endTime": 34.5,
-    "boundingBox": {
-      "x": 0.78,
-      "y": 0.1,
-      "width": 0.22,
+      "width": 0.31,
       "height": 0.62
     }
   },
   {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 34.5,
-    "endTime": 36.5,
-    "boundingBox": {
-      "x": 0.31,
-      "y": 0.17,
-      "width": 0.27,
-      "height": 0.55
-    }
-  },
-  {
     "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 34.5,
-    "endTime": 36.5,
-    "boundingBox": {
-      "x": 0.62,
-      "y": 0.17,
-      "width": 0.26,
-      "height": 0.55
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 36.5,
-    "endTime": 40.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.5,
-      "width": 0.4,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 36.5,
-    "endTime": 40.5,
-    "boundingBox": {
-      "x": 0.8,
-      "y": 0.6,
-      "width": 0.2,
-      "height": 0.4
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 46.5,
-    "endTime": 49.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.1,
-      "width": 0.18,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 46.5,
-    "endTime": 49.5,
-    "boundingBox": {
-      "x": 0.68,
-      "y": 0.1,
-      "width": 0.18,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 56.5,
-    "endTime": 60.5,
-    "boundingBox": {
-      "x": 0.06,
-      "y": 0.17,
-      "width": 0.44,
-      "height": 0.83
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 56.5,
-    "endTime": 60.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.17,
-      "width": 0.44,
-      "height": 0.83
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 63.5,
-    "endTime": 69.5,
-    "boundingBox": {
-      "x": 0.74,
-      "y": 0.7,
-      "width": 0.22,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 70.5,
-    "endTime": 76.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0.7,
-      "width": 0.32,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "slyms27PQJQ",
-    "startTime": 80.5,
-    "endTime": 81.5,
-    "boundingBox": {
-      "x": 0.78,
-      "y": 0.28,
-      "width": 0.22,
-      "height": 0.4
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "slyms27PQJQ",
-    "startTime": 81.5,
-    "endTime": 83.5,
+    "startTime": 53,
+    "endTime": 57,
     "boundingBox": {
       "x": 0,
-      "y": 0.28,
-      "width": 0.19,
-      "height": 0.44
+      "y": 0.3,
+      "width": 0.38,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 53,
+    "endTime": 57,
+    "boundingBox": {
+      "x": 0.38,
+      "y": 0,
+      "width": 0.31,
+      "height": 0.4
     }
   },
   {
     "characterId": "hachiware",
-    "video": "slyms27PQJQ",
-    "startTime": 85.5,
-    "endTime": 91.5,
+    "startTime": 53,
+    "endTime": 57,
     "boundingBox": {
-      "x": 0.1,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
+      "x": 0.63,
+      "y": 0.3,
+      "width": 0.31,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 58,
+    "endTime": 62,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0.05,
+      "width": 0.35,
+      "height": 0.78
     }
   },
   {
     "characterId": "chiikawa",
-    "video": "slyms27PQJQ",
-    "startTime": 85.5,
-    "endTime": 91.5,
+    "startTime": 58,
+    "endTime": 62,
     "boundingBox": {
-      "x": 0.42,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
+      "x": 0,
+      "y": 0.6,
+      "width": 0.31,
+      "height": 0.4
     }
   },
   {
-    "characterId": "usagi",
-    "video": "slyms27PQJQ",
-    "startTime": 85.5,
-    "endTime": 91.5,
+    "characterId": "hachiware",
+    "startTime": 68,
+    "endTime": 72,
     "boundingBox": {
-      "x": 0.68,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 12.5,
-    "endTime": 13.5,
-    "boundingBox": {
-      "x": 0.6,
+      "x": 0.06,
       "y": 0.1,
-      "width": 0.16,
-      "height": 0.42
+      "width": 0.38,
+      "height": 0.7
     }
   },
   {
     "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 13.5,
-    "endTime": 14.5,
+    "startTime": 68,
+    "endTime": 72,
     "boundingBox": {
-      "x": 0.25,
-      "y": 0.15,
-      "width": 0.17,
-      "height": 0.42
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 15.5,
-    "endTime": 16.5,
-    "boundingBox": {
-      "x": 0.4,
+      "x": 0.5,
       "y": 0.1,
-      "width": 0.24,
-      "height": 0.52
+      "width": 0.44,
+      "height": 0.7
     }
   },
   {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 16.5,
-    "endTime": 17.5,
+    "characterId": "rakko",
+    "startTime": 73,
+    "endTime": 77,
     "boundingBox": {
-      "x": 0.68,
-      "y": 0.08,
-      "width": 0.24,
+      "x": 0.62,
+      "y": 0.3,
+      "width": 0.38,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 78,
+    "endTime": 82,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0.1,
+      "width": 0.44,
+      "height": 0.68
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 83,
+    "endTime": 87,
+    "boundingBox": {
+      "x": 0.06,
+      "y": 0,
+      "width": 0.63,
+      "height": 1
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 88,
+    "endTime": 92,
+    "boundingBox": {
+      "x": 0.16,
+      "y": 0,
+      "width": 0.28,
       "height": 0.5
     }
   },
   {
+    "characterId": "hachiware",
+    "startTime": 88,
+    "endTime": 92,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.3,
+      "width": 0.5,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 93,
+    "endTime": 97,
+    "boundingBox": {
+      "x": 0.12,
+      "y": 0.1,
+      "width": 0.32,
+      "height": 0.85
+    }
+  },
+  {
     "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 30.5,
-    "endTime": 31.5,
+    "startTime": 93,
+    "endTime": 97,
+    "boundingBox": {
+      "x": 0.56,
+      "y": 0.1,
+      "width": 0.32,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 98,
+    "endTime": 102,
+    "boundingBox": {
+      "x": 0.47,
+      "y": 0,
+      "width": 0.44,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 98,
+    "endTime": 102,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.55,
+      "width": 0.38,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 103,
+    "endTime": 107,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.2,
+      "width": 0.31,
+      "height": 0.75
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 103,
+    "endTime": 107,
+    "boundingBox": {
+      "x": 0.69,
+      "y": 0.2,
+      "width": 0.31,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 108,
+    "endTime": 112,
+    "boundingBox": {
+      "x": 0.22,
+      "y": 0.05,
+      "width": 0.53,
+      "height": 0.95
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 118,
+    "endTime": 122,
+    "boundingBox": {
+      "x": 0.16,
+      "y": 0.1,
+      "width": 0.31,
+      "height": 0.65
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 118,
+    "endTime": 122,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.1,
+      "width": 0.31,
+      "height": 0.65
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 118,
+    "endTime": 122,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.6,
+      "width": 0.31,
+      "height": 0.4
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 128,
+    "endTime": 132,
+    "boundingBox": {
+      "x": 0.25,
+      "y": 0.22,
+      "width": 0.22,
+      "height": 0.56
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 128,
+    "endTime": 132,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.11,
+      "width": 0.25,
+      "height": 0.67
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 133,
+    "endTime": 137,
+    "boundingBox": {
+      "x": 0.19,
+      "y": 0.1,
+      "width": 0.59,
+      "height": 0.8
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 138,
+    "endTime": 142,
+    "boundingBox": {
+      "x": 0.05,
+      "y": 0,
+      "width": 0.9,
+      "height": 1
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 143,
+    "endTime": 147,
+    "boundingBox": {
+      "x": 0.03,
+      "y": 0.55,
+      "width": 0.22,
+      "height": 0.4
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 143,
+    "endTime": 147,
+    "boundingBox": {
+      "x": 0.34,
+      "y": 0.5,
+      "width": 0.25,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 143,
+    "endTime": 147,
+    "boundingBox": {
+      "x": 0.75,
+      "y": 0.05,
+      "width": 0.13,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "usagi",
+    "startTime": 148,
+    "endTime": 152,
+    "boundingBox": {
+      "x": 0.19,
+      "y": 0.05,
+      "width": 0.15,
+      "height": 0.35
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 148,
+    "endTime": 152,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0.25,
+      "width": 0.19,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 148,
+    "endTime": 152,
+    "boundingBox": {
+      "x": 0.16,
+      "y": 0.45,
+      "width": 0.22,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 153,
+    "endTime": 157,
+    "boundingBox": {
+      "x": 0.12,
+      "y": 0.2,
+      "width": 0.26,
+      "height": 0.35
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 153,
+    "endTime": 157,
+    "boundingBox": {
+      "x": 0.47,
+      "y": 0.2,
+      "width": 0.28,
+      "height": 0.35
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 158,
+    "endTime": 162,
     "boundingBox": {
       "x": 0.16,
       "y": 0.35,
-      "width": 0.24,
+      "width": 0.31,
       "height": 0.5
     }
   },
   {
-    "characterId": "usagi",
-    "video": "5dTRQblIt-Q",
-    "startTime": 31.5,
-    "endTime": 33.5,
+    "characterId": "hachiware",
+    "startTime": 158,
+    "endTime": 162,
     "boundingBox": {
-      "x": 0.2,
+      "x": 0.5,
+      "y": 0.35,
+      "width": 0.38,
+      "height": 0.5
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 163,
+    "endTime": 167,
+    "boundingBox": {
+      "x": 0.47,
+      "y": 0.1,
+      "width": 0.47,
+      "height": 0.8
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 168,
+    "endTime": 172,
+    "boundingBox": {
+      "x": 0.25,
+      "y": 0,
+      "width": 0.63,
+      "height": 1
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 173,
+    "endTime": 177,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.2,
+      "width": 0.25,
+      "height": 0.8
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 173,
+    "endTime": 177,
+    "boundingBox": {
+      "x": 0.59,
+      "y": 0.3,
+      "width": 0.41,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 183,
+    "endTime": 187,
+    "boundingBox": {
+      "x": 0.41,
+      "y": 0,
+      "width": 0.19,
+      "height": 0.45
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 188,
+    "endTime": 192,
+    "boundingBox": {
+      "x": 0.12,
+      "y": 0.3,
+      "width": 0.38,
+      "height": 0.65
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 188,
+    "endTime": 192,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.3,
+      "width": 0.38,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 193,
+    "endTime": 197,
+    "boundingBox": {
+      "x": 0.41,
       "y": 0.05,
-      "width": 0.2,
+      "width": 0.34,
+      "height": 0.67
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 193,
+    "endTime": 197,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.7,
+      "width": 0.31,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 193,
+    "endTime": 197,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0.7,
+      "width": 0.29,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 198,
+    "endTime": 202,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0.1,
+      "width": 0.25,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 198,
+    "endTime": 202,
+    "boundingBox": {
+      "x": 0.56,
+      "y": 0.1,
+      "width": 0.28,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 198,
+    "endTime": 202,
+    "boundingBox": {
+      "x": 0,
+      "y": 0.5,
+      "width": 0.44,
+      "height": 0.5
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 203,
+    "endTime": 207,
+    "boundingBox": {
+      "x": 0.25,
+      "y": 0,
+      "width": 0.44,
+      "height": 0.6
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 203,
+    "endTime": 207,
+    "boundingBox": {
+      "x": 0.06,
+      "y": 0.7,
+      "width": 0.41,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 203,
+    "endTime": 207,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.65,
+      "width": 0.44,
+      "height": 0.35
+    }
+  },
+  {
+    "characterId": "usagi",
+    "startTime": 208,
+    "endTime": 212,
+    "boundingBox": {
+      "x": 0.19,
+      "y": 0.05,
+      "width": 0.15,
       "height": 0.35
     }
   },
   {
     "characterId": "hachiware",
-    "video": "5dTRQblIt-Q",
-    "startTime": 31.5,
-    "endTime": 33.5,
+    "startTime": 208,
+    "endTime": 212,
     "boundingBox": {
-      "x": 0.33,
-      "y": 0.22,
-      "width": 0.2,
+      "x": 0.31,
+      "y": 0.25,
+      "width": 0.19,
       "height": 0.45
     }
   },
   {
     "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 31.5,
-    "endTime": 33.5,
+    "startTime": 208,
+    "endTime": 212,
     "boundingBox": {
-      "x": 0.15,
-      "y": 0.4,
+      "x": 0.16,
+      "y": 0.45,
       "width": 0.22,
       "height": 0.45
     }
   },
   {
+    "characterId": "rakko",
+    "startTime": 213,
+    "endTime": 217,
+    "boundingBox": {
+      "x": 0.41,
+      "y": 0.45,
+      "width": 0.18,
+      "height": 0.35
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 218,
+    "endTime": 222,
+    "boundingBox": {
+      "x": 0.66,
+      "y": 0.3,
+      "width": 0.34,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 228,
+    "endTime": 232,
+    "boundingBox": {
+      "x": 0.28,
+      "y": 0,
+      "width": 0.53,
+      "height": 0.5
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 233,
+    "endTime": 237,
+    "boundingBox": {
+      "x": 0.28,
+      "y": 0,
+      "width": 0.41,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "rakko",
+    "startTime": 238,
+    "endTime": 242,
+    "boundingBox": {
+      "x": 0.31,
+      "y": 0,
+      "width": 0.41,
+      "height": 0.6
+    }
+  },
+  {
+    "characterId": "fugu",
+    "startTime": 248,
+    "endTime": 252,
+    "boundingBox": {
+      "x": 0.06,
+      "y": 0.25,
+      "width": 0.41,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "fugu",
+    "startTime": 253,
+    "endTime": 257,
+    "boundingBox": {
+      "x": 0.09,
+      "y": 0.1,
+      "width": 0.41,
+      "height": 0.9
+    }
+  },
+  {
+    "characterId": "fugu",
+    "startTime": 258,
+    "endTime": 262,
+    "boundingBox": {
+      "x": 0.56,
+      "y": 0.1,
+      "width": 0.32,
+      "height": 0.5
+    }
+  },
+  {
     "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 42.5,
-    "endTime": 43.5,
+    "startTime": 263,
+    "endTime": 267,
     "boundingBox": {
       "x": 0.19,
       "y": 0.33,
-      "width": 0.44,
-      "height": 0.62
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 43.5,
-    "endTime": 44.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0.22,
-      "width": 0.36,
-      "height": 0.62
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 44.5,
-    "endTime": 45.5,
-    "boundingBox": {
-      "x": 0.09,
-      "y": 0.11,
-      "width": 0.47,
-      "height": 0.78
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 63.5,
-    "endTime": 69.5,
-    "boundingBox": {
-      "x": 0.74,
-      "y": 0.7,
-      "width": 0.22,
-      "height": 0.3
+      "width": 0.28,
+      "height": 0.56
     }
   },
   {
     "characterId": "hachiware",
-    "video": "5dTRQblIt-Q",
-    "startTime": 70.5,
-    "endTime": 76.5,
+    "startTime": 263,
+    "endTime": 267,
     "boundingBox": {
-      "x": 0.05,
-      "y": 0.7,
-      "width": 0.32,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "5dTRQblIt-Q",
-    "startTime": 80.5,
-    "endTime": 81.5,
-    "boundingBox": {
-      "x": 0.78,
+      "x": 0.5,
       "y": 0.28,
-      "width": 0.22,
-      "height": 0.4
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "5dTRQblIt-Q",
-    "startTime": 81.5,
-    "endTime": 83.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.28,
-      "width": 0.19,
-      "height": 0.44
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "5dTRQblIt-Q",
-    "startTime": 85.5,
-    "endTime": 91.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "5dTRQblIt-Q",
-    "startTime": 85.5,
-    "endTime": 91.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "5dTRQblIt-Q",
-    "startTime": 85.5,
-    "endTime": 91.5,
-    "boundingBox": {
-      "x": 0.68,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "BVzxUqjbmzk",
-    "startTime": 34.5,
-    "endTime": 35.5,
-    "boundingBox": {
-      "x": 0.16,
-      "y": 0.35,
-      "width": 0.24,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "BVzxUqjbmzk",
-    "startTime": 35.5,
-    "endTime": 37.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.2,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "BVzxUqjbmzk",
-    "startTime": 35.5,
-    "endTime": 37.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.22,
-      "width": 0.2,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "BVzxUqjbmzk",
-    "startTime": 35.5,
-    "endTime": 37.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.4,
-      "width": 0.22,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "BVzxUqjbmzk",
-    "startTime": 69.5,
-    "endTime": 75.5,
-    "boundingBox": {
-      "x": 0.74,
-      "y": 0.7,
-      "width": 0.22,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "BVzxUqjbmzk",
-    "startTime": 77.5,
-    "endTime": 82.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0.7,
-      "width": 0.32,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "BVzxUqjbmzk",
-    "startTime": 86.5,
-    "endTime": 87.5,
-    "boundingBox": {
-      "x": 0.78,
-      "y": 0.28,
-      "width": 0.22,
-      "height": 0.4
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "BVzxUqjbmzk",
-    "startTime": 88.5,
-    "endTime": 90.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.28,
-      "width": 0.19,
-      "height": 0.44
-    }
-  },
-  {
-    "characterId": "hachiware",
-    "video": "BVzxUqjbmzk",
-    "startTime": 92.5,
-    "endTime": 96.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "chiikawa",
-    "video": "BVzxUqjbmzk",
-    "startTime": 92.5,
-    "endTime": 96.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "BVzxUqjbmzk",
-    "startTime": 92.5,
-    "endTime": 96.5,
-    "boundingBox": {
-      "x": 0.68,
-      "y": 0.62,
-      "width": 0.22,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 0,
-    "endTime": 2.5,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.05,
-      "width": 0.3,
-      "height": 0.62
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 2.5,
-    "endTime": 5.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 5.5,
-    "endTime": 7.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 5.5,
-    "endTime": 7.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.1,
-      "width": 0.25,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 7.5,
-    "endTime": 9.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.2,
-      "width": 0.32,
-      "height": 0.6
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 7.5,
-    "endTime": 9.5,
-    "boundingBox": {
-      "x": 0.62,
-      "y": 0,
-      "width": 0.38,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 9.5,
-    "endTime": 10.5,
-    "boundingBox": {
-      "x": 0.09,
-      "y": 0.22,
-      "width": 0.3,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 9.5,
-    "endTime": 10.5,
-    "boundingBox": {
-      "x": 0.69,
-      "y": 0,
       "width": 0.31,
-      "height": 1
+      "height": 0.61
     }
   },
   {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 10.5,
-    "endTime": 15.5,
-    "boundingBox": {
-      "x": 0.55,
-      "y": 0.25,
-      "width": 0.2,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 10.5,
-    "endTime": 15.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0.62,
-      "width": 0.16,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 15.5,
-    "endTime": 19.5,
-    "boundingBox": {
-      "x": 0.04,
-      "y": 0.03,
-      "width": 0.32,
-      "height": 0.65
-    }
-  },
-  {
-    "characterId": "roudou-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 15.5,
-    "endTime": 19.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.22,
-      "width": 0.55,
-      "height": 0.78
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 19.5,
-    "endTime": 22.5,
-    "boundingBox": {
-      "x": 0.02,
-      "y": 0.05,
-      "width": 0.9,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 22.5,
-    "endTime": 26.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.03,
-      "width": 0.45,
-      "height": 0.72
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 26.5,
-    "endTime": 27.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.5,
-      "width": 0.28,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 27.5,
-    "endTime": 28.5,
-    "boundingBox": {
-      "x": 0.38,
-      "y": 0.42,
-      "width": 0.3,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "slyms27PQJQ",
-    "startTime": 28.5,
-    "endTime": 29.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.3,
-      "width": 0.32,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "pochette-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 40.5,
-    "endTime": 43.5,
-    "boundingBox": {
-      "x": 0.48,
-      "y": 0.05,
-      "width": 0.4,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "pochette-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 43.5,
-    "endTime": 46.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.05,
-      "width": 0.45,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "pochette-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 49.5,
-    "endTime": 52.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0,
-      "width": 0.42,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "pochette-yoroi",
-    "video": "slyms27PQJQ",
-    "startTime": 52.5,
-    "endTime": 56.5,
-    "boundingBox": {
-      "x": 0.4,
-      "y": 0.05,
-      "width": 0.3,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "usagi",
-    "video": "slyms27PQJQ",
-    "startTime": 57.5,
-    "endTime": 60.5,
-    "boundingBox": {
-      "x": 0.84,
-      "y": 0.6,
-      "width": 0.16,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 0,
-    "endTime": 2.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.15,
-      "width": 0.34,
-      "height": 0.48
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 2.5,
-    "endTime": 7.5,
-    "boundingBox": {
-      "x": 0.28,
-      "y": 0.08,
-      "width": 0.36,
-      "height": 0.87
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 8.5,
-    "endTime": 9.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.08,
-      "width": 0.34,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 9.5,
-    "endTime": 10.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.1,
-      "width": 0.48,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 10.5,
-    "endTime": 12.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0,
-      "width": 0.75,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 12.5,
-    "endTime": 15.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0.3,
-      "width": 0.4,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 15.5,
-    "endTime": 17.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.3,
-      "width": 0.4,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 19.5,
-    "endTime": 20.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 20.5,
-    "endTime": 22.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 1,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 22.5,
-    "endTime": 24.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.1,
-      "width": 0.55,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 24.5,
-    "endTime": 30.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.05,
-      "width": 0.42,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 45.5,
-    "endTime": 48.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.3,
-      "width": 0.5,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 51.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 54.5,
-    "endTime": 56.5,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.1,
-      "width": 0.5,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "kurimanju",
-    "video": "5dTRQblIt-Q",
-    "startTime": 56.5,
-    "endTime": 60.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0,
-      "width": 0.58,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 0,
-    "endTime": 2.5,
-    "boundingBox": {
-      "x": 0.14,
-      "y": 0.15,
-      "width": 0.34,
-      "height": 0.65
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 0,
-    "endTime": 2.5,
-    "boundingBox": {
-      "x": 0.45,
-      "y": 0.08,
-      "width": 0.28,
-      "height": 0.65
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 2.5,
-    "endTime": 5.5,
-    "boundingBox": {
-      "x": 0.14,
-      "y": 0.03,
-      "width": 0.34,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 2.5,
-    "endTime": 5.5,
-    "boundingBox": {
-      "x": 0.55,
-      "y": 0.1,
-      "width": 0.45,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 5.5,
-    "endTime": 6.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0.05,
-      "width": 0.32,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 5.5,
-    "endTime": 6.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.1,
-      "width": 0.45,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 6.5,
-    "endTime": 9.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0.05,
-      "width": 0.65,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 9.5,
-    "endTime": 13.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 13.5,
-    "endTime": 14.5,
-    "boundingBox": {
-      "x": 0.18,
-      "y": 0.15,
-      "width": 0.28,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 14.5,
-    "endTime": 16.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.2,
-      "width": 0.36,
-      "height": 0.65
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 16.5,
-    "endTime": 22.5,
-    "boundingBox": {
-      "x": 0.18,
-      "y": 0,
-      "width": 0.7,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 22.5,
-    "endTime": 26.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.1,
-      "width": 0.42,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 24.5,
-    "endTime": 26.5,
-    "boundingBox": {
-      "x": 0.58,
-      "y": 0.3,
-      "width": 0.42,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 26.5,
-    "endTime": 29.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0,
-      "width": 0.42,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 29.5,
-    "endTime": 30.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.45,
-      "width": 0.4,
-      "height": 0.55
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 30.5,
-    "endTime": 31.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 31.5,
-    "endTime": 34.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.1,
-      "width": 0.4,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 31.5,
-    "endTime": 34.5,
-    "boundingBox": {
-      "x": 0.55,
-      "y": 0.05,
-      "width": 0.25,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 37.5,
-    "endTime": 39.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 39.5,
-    "endTime": 41.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.03,
-      "width": 0.45,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 41.5,
-    "endTime": 44.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0.18,
-      "width": 0.3,
-      "height": 0.32
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 41.5,
-    "endTime": 44.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0.48,
-      "width": 0.26,
-      "height": 0.38
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 44.5,
-    "endTime": 46.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.1,
-      "width": 0.42,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 48.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0,
-      "width": 0.6,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 54.5,
-    "endTime": 58.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0,
-      "width": 0.4,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 54.5,
-    "endTime": 58.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.2,
-      "height": 0.42
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 59.5,
-    "endTime": 62.5,
-    "boundingBox": {
-      "x": 0.4,
-      "y": 0.05,
-      "width": 0.45,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 62.5,
-    "endTime": 64.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.25,
-      "width": 0.2,
-      "height": 0.35
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 62.5,
-    "endTime": 64.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0.2,
-      "width": 0.4,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "momonga",
-    "video": "BVzxUqjbmzk",
-    "startTime": 64.5,
-    "endTime": 66.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.2,
-      "width": 0.18,
-      "height": 0.3
-    }
-  },
-  {
-    "characterId": "ode",
-    "video": "BVzxUqjbmzk",
-    "startTime": 64.5,
-    "endTime": 66.5,
-    "boundingBox": {
-      "x": 0.6,
-      "y": 0.3,
-      "width": 0.4,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 10.5,
-    "endTime": 11.5,
-    "boundingBox": {
-      "x": 0.03,
-      "y": 0,
-      "width": 0.5,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 18.5,
-    "endTime": 19.5,
+    "characterId": "chiikawa",
+    "startTime": 268,
+    "endTime": 272,
     "boundingBox": {
       "x": 0.12,
-      "y": 0,
-      "width": 0.78,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuki-tsukumo",
-    "video": "ruX3rIj3--w",
-    "startTime": 24.5,
-    "endTime": 25.5,
-    "boundingBox": {
-      "x": 0.31,
-      "y": 0.08,
-      "width": 0.38,
-      "height": 0.92
-    }
-  },
-  {
-    "characterId": "megumi",
-    "video": "ruX3rIj3--w",
-    "startTime": 24.5,
-    "endTime": 25.5,
-    "boundingBox": {
-      "x": 0.69,
-      "y": 0.22,
-      "width": 0.1,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 24.5,
-    "endTime": 25.5,
-    "boundingBox": {
-      "x": 0.86,
-      "y": 0.22,
-      "width": 0.12,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "maki",
-    "video": "ruX3rIj3--w",
-    "startTime": 26.5,
-    "endTime": 27.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 1,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 48.5,
-    "endTime": 49.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.25,
-      "width": 0.3,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 52.5,
-    "endTime": 53.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.1,
-      "width": 0.4,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 53.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 54.5,
-    "endTime": 55.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 59.5,
-    "endTime": 61.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.75,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 66.5,
-    "endTime": 67.5,
-    "boundingBox": {
-      "x": 0.07,
-      "y": 0.05,
-      "width": 0.28,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "tengen",
-    "video": "ruX3rIj3--w",
-    "startTime": 71.5,
-    "endTime": 72.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.45,
+      "y": 0.2,
       "width": 0.35,
-      "height": 0.55
+      "height": 0.8
     }
   },
   {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 75.5,
-    "endTime": 76.5,
+    "characterId": "hachiware",
+    "startTime": 268,
+    "endTime": 272,
     "boundingBox": {
-      "x": 0.3,
-      "y": 0.03,
-      "width": 0.5,
-      "height": 0.97
+      "x": 0.47,
+      "y": 0.2,
+      "width": 0.47,
+      "height": 0.8
     }
   },
   {
-    "characterId": "maki",
-    "video": "ruX3rIj3--w",
-    "startTime": 79.5,
-    "endTime": 80.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.9,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "maki",
-    "video": "ruX3rIj3--w",
-    "startTime": 84.5,
-    "endTime": 85.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.1,
-      "width": 0.42,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "takaba",
-    "video": "ruX3rIj3--w",
-    "startTime": 86.5,
-    "endTime": 87.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.02,
-      "width": 0.68,
-      "height": 0.98
-    }
-  },
-  {
-    "characterId": "higuruma",
-    "video": "ruX3rIj3--w",
-    "startTime": 88.5,
-    "endTime": 89.5,
-    "boundingBox": {
-      "x": 0.37,
-      "y": 0.25,
-      "width": 0.53,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "higuruma",
-    "video": "ruX3rIj3--w",
-    "startTime": 89.5,
-    "endTime": 90.5,
-    "boundingBox": {
-      "x": 0.58,
-      "y": 0,
-      "width": 0.25,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuji",
-    "video": "ruX3rIj3--w",
-    "startTime": 96.5,
-    "endTime": 97.5,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.05,
-      "width": 0.32,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 3.5,
-    "endTime": 4.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.1,
-      "width": 0.45,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 4.5,
-    "endTime": 5.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 7.5,
-    "endTime": 8.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "mikoshiba",
-    "video": "lWQQOd6L4UE",
-    "startTime": 8.5,
-    "endTime": 9.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.45,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "seo",
-    "video": "lWQQOd6L4UE",
-    "startTime": 9.5,
-    "endTime": 10.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0.05,
-      "width": 0.65,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "wakamatsu",
-    "video": "lWQQOd6L4UE",
-    "startTime": 10.5,
-    "endTime": 11.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "kashima",
-    "video": "lWQQOd6L4UE",
-    "startTime": 11.5,
-    "endTime": 12.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.65,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "hori",
-    "video": "lWQQOd6L4UE",
-    "startTime": 12.5,
-    "endTime": 13.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 14.5,
-    "endTime": 16.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 19.5,
-    "endTime": 20.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "mikoshiba",
-    "video": "lWQQOd6L4UE",
-    "startTime": 22.5,
-    "endTime": 23.5,
-    "boundingBox": {
-      "x": 0.28,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "mikoshiba",
-    "video": "lWQQOd6L4UE",
-    "startTime": 29.5,
-    "endTime": 31.5,
+    "characterId": "usagi",
+    "startTime": 273,
+    "endTime": 277,
     "boundingBox": {
       "x": 0.09,
-      "y": 0.05,
-      "width": 0.38,
-      "height": 0.95
+      "y": 0.1,
+      "width": 0.29,
+      "height": 0.8
     }
   },
   {
-    "characterId": "kashima",
-    "video": "lWQQOd6L4UE",
-    "startTime": 29.5,
-    "endTime": 31.5,
+    "characterId": "chiikawa",
+    "startTime": 273,
+    "endTime": 277,
     "boundingBox": {
       "x": 0.5,
-      "y": 0.05,
-      "width": 0.32,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 32.5,
-    "endTime": 33.5,
-    "boundingBox": {
-      "x": 0.18,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 36.5,
-    "endTime": 39.5,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.05,
-      "width": 0.45,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 40.5,
-    "endTime": 41.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.5,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 41.5,
-    "endTime": 42.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.85
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 42.5,
-    "endTime": 44.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0,
-      "width": 1,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 44.5,
-    "endTime": 45.5,
-    "boundingBox": {
-      "x": 0.45,
-      "y": 0.1,
-      "width": 0.35,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 46.5,
-    "endTime": 47.5,
-    "boundingBox": {
-      "x": 0.45,
-      "y": 0.1,
-      "width": 0.4,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "mikoshiba",
-    "video": "lWQQOd6L4UE",
-    "startTime": 48.5,
-    "endTime": 49.5,
-    "boundingBox": {
-      "x": 0.05,
       "y": 0.25,
-      "width": 0.35,
-      "height": 0.75
-    }
-  },
-  {
-    "characterId": "kashima",
-    "video": "lWQQOd6L4UE",
-    "startTime": 52.5,
-    "endTime": 53.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.42,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "hori",
-    "video": "lWQQOd6L4UE",
-    "startTime": 53.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.05,
-      "width": 0.35,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "hori",
-    "video": "lWQQOd6L4UE",
-    "startTime": 54.5,
-    "endTime": 55.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.38,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 55.5,
-    "endTime": 56.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 59.5,
-    "endTime": 62.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.05,
-      "width": 0.6,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "mikoshiba",
-    "video": "lWQQOd6L4UE",
-    "startTime": 64.5,
-    "endTime": 66.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0.05,
-      "width": 0.65,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 66.5,
-    "endTime": 67.5,
-    "boundingBox": {
-      "x": 0.08,
-      "y": 0.42,
-      "width": 0.17,
-      "height": 0.55
-    }
-  },
-  {
-    "characterId": "wakamatsu",
-    "video": "lWQQOd6L4UE",
-    "startTime": 67.5,
-    "endTime": 69.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.1,
-      "width": 0.5,
-      "height": 0.9
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 70.5,
-    "endTime": 71.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "nozaki",
-    "video": "lWQQOd6L4UE",
-    "startTime": 72.5,
-    "endTime": 73.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.4,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 11.5,
-    "endTime": 13.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.52,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 15.5,
-    "endTime": 16.5,
-    "boundingBox": {
-      "x": 0,
-      "y": 0.05,
-      "width": 0.55,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 16.5,
-    "endTime": 17.5,
-    "boundingBox": {
-      "x": 0.15,
-      "y": 0.2,
-      "width": 0.35,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 17.5,
-    "endTime": 18.5,
-    "boundingBox": {
-      "x": 0.2,
-      "y": 0.2,
-      "width": 0.32,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "taromaru",
-    "video": "UNjHxhljAck",
-    "startTime": 17.5,
-    "endTime": 18.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0.4,
-      "width": 0.32,
-      "height": 0.6
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 18.5,
-    "endTime": 19.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.1,
       "width": 0.25,
       "height": 0.6
     }
   },
   {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 18.5,
-    "endTime": 19.5,
+    "characterId": "hachiware",
+    "startTime": 273,
+    "endTime": 277,
     "boundingBox": {
-      "x": 0.55,
+      "x": 0.72,
       "y": 0.25,
-      "width": 0.2,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 18.5,
-    "endTime": 19.5,
-    "boundingBox": {
-      "x": 0.75,
-      "y": 0,
-      "width": 0.25,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 19.5,
-    "endTime": 20.5,
-    "boundingBox": {
-      "x": 0.35,
-      "y": 0.05,
-      "width": 0.3,
-      "height": 0.45
-    }
-  },
-  {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 19.5,
-    "endTime": 20.5,
-    "boundingBox": {
-      "x": 0.65,
-      "y": 0,
-      "width": 0.3,
+      "width": 0.28,
       "height": 0.6
     }
   },
   {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 19.5,
-    "endTime": 20.5,
-    "boundingBox": {
-      "x": 0.42,
-      "y": 0.5,
-      "width": 0.25,
-      "height": 0.5
-    }
-  },
-  {
-    "characterId": "taromaru",
-    "video": "UNjHxhljAck",
-    "startTime": 35.5,
-    "endTime": 36.5,
-    "boundingBox": {
-      "x": 0.08,
-      "y": 0.3,
-      "width": 0.32,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 35.5,
-    "endTime": 36.5,
-    "boundingBox": {
-      "x": 0.5,
-      "y": 0,
-      "width": 0.35,
-      "height": 0.55
-    }
-  },
-  {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 38.5,
-    "endTime": 39.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0,
-      "width": 0.5,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 53.5,
-    "endTime": 54.5,
-    "boundingBox": {
-      "x": 0.05,
-      "y": 0,
-      "width": 0.7,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 55.5,
-    "endTime": 56.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.65,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 56.5,
-    "endTime": 57.5,
-    "boundingBox": {
-      "x": 0.22,
-      "y": 0,
-      "width": 0.55,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "taromaru",
-    "video": "UNjHxhljAck",
-    "startTime": 58.5,
-    "endTime": 59.5,
-    "boundingBox": {
-      "x": 0.25,
-      "y": 0.2,
-      "width": 0.5,
-      "height": 0.8
-    }
-  },
-  {
-    "characterId": "meguree",
-    "video": "UNjHxhljAck",
-    "startTime": 59.5,
-    "endTime": 60.5,
-    "boundingBox": {
-      "x": 0.33,
-      "y": 0.2,
-      "width": 0.25,
-      "height": 0.7
-    }
-  },
-  {
-    "characterId": "meguree",
-    "video": "UNjHxhljAck",
-    "startTime": 60.5,
-    "endTime": 61.5,
-    "boundingBox": {
-      "x": 0.1,
-      "y": 0,
-      "width": 0.8,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 69.5,
-    "endTime": 71.5,
+    "characterId": "usagi",
+    "startTime": 278,
+    "endTime": 282,
     "boundingBox": {
       "x": 0,
-      "y": 0,
-      "width": 0.95,
-      "height": 1
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 80.5,
-    "endTime": 81.5,
-    "boundingBox": {
-      "x": 0.3,
-      "y": 0.05,
-      "width": 0.35,
+      "y": 0.1,
+      "width": 0.25,
       "height": 0.9
     }
   },
   {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 82.5,
-    "endTime": 83.5,
+    "characterId": "chiikawa",
+    "startTime": 278,
+    "endTime": 282,
     "boundingBox": {
-      "x": 0.45,
-      "y": 0.2,
-      "width": 0.18,
-      "height": 0.8
+      "x": 0.44,
+      "y": 0.35,
+      "width": 0.28,
+      "height": 0.65
     }
   },
   {
-    "characterId": "miki",
-    "video": "UNjHxhljAck",
-    "startTime": 82.5,
-    "endTime": 83.5,
+    "characterId": "hachiware",
+    "startTime": 278,
+    "endTime": 282,
     "boundingBox": {
-      "x": 0.66,
+      "x": 0.72,
       "y": 0.3,
-      "width": 0.2,
+      "width": 0.28,
       "height": 0.7
     }
   },
   {
-    "characterId": "yuri",
-    "video": "UNjHxhljAck",
-    "startTime": 84.5,
-    "endTime": 86.5,
+    "characterId": "chiikawa",
+    "startTime": 288,
+    "endTime": 292,
     "boundingBox": {
-      "x": 0.36,
-      "y": 0.05,
-      "width": 0.25,
-      "height": 0.95
-    }
-  },
-  {
-    "characterId": "yuki",
-    "video": "UNjHxhljAck",
-    "startTime": 84.5,
-    "endTime": 86.5,
-    "boundingBox": {
-      "x": 0.62,
+      "x": 0.16,
       "y": 0.15,
-      "width": 0.35,
-      "height": 0.85
+      "width": 0.31,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 288,
+    "endTime": 292,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.15,
+      "width": 0.34,
+      "height": 0.7
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 293,
+    "endTime": 297,
+    "boundingBox": {
+      "x": 0.41,
+      "y": 0.1,
+      "width": 0.28,
+      "height": 0.65
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 293,
+    "endTime": 297,
+    "boundingBox": {
+      "x": 0.78,
+      "y": 0.45,
+      "width": 0.22,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "usagi",
+    "startTime": 298,
+    "endTime": 302,
+    "boundingBox": {
+      "x": 0.06,
+      "y": 0.1,
+      "width": 0.22,
+      "height": 0.55
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 298,
+    "endTime": 302,
+    "boundingBox": {
+      "x": 0.5,
+      "y": 0.3,
+      "width": 0.31,
+      "height": 0.6
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 303,
+    "endTime": 307,
+    "boundingBox": {
+      "x": 0.78,
+      "y": 0.62,
+      "width": 0.2,
+      "height": 0.38
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 313,
+    "endTime": 317,
+    "boundingBox": {
+      "x": 0.16,
+      "y": 0.7,
+      "width": 0.18,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "usagi",
+    "startTime": 318,
+    "endTime": 322,
+    "boundingBox": {
+      "x": 0.78,
+      "y": 0.25,
+      "width": 0.22,
+      "height": 0.4
+    }
+  },
+  {
+    "characterId": "hachiware",
+    "startTime": 328,
+    "endTime": 330.3,
+    "boundingBox": {
+      "x": 0.12,
+      "y": 0.7,
+      "width": 0.22,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "chiikawa",
+    "startTime": 328,
+    "endTime": 330.3,
+    "boundingBox": {
+      "x": 0.44,
+      "y": 0.7,
+      "width": 0.22,
+      "height": 0.3
+    }
+  },
+  {
+    "characterId": "usagi",
+    "startTime": 328,
+    "endTime": 330.3,
+    "boundingBox": {
+      "x": 0.69,
+      "y": 0.7,
+      "width": 0.19,
+      "height": 0.3
     }
   }
 ]

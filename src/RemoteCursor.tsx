@@ -5,8 +5,11 @@ import type { Socket } from "socket.io-client";
 export let remoteInputActive = false;
 
 // The phone controls this site's viewport, including modals and player controls.
-export function RemoteCursor({ socket, wake }: { socket: Socket; wake: () => void }) {
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
+// It is a small circle shown only while the touchpad is in use; it fades after 2s without input.
+export function RemoteCursor({ socket, wake, target }: { socket: Socket; wake: () => void; target: boolean }) {
+  const [position, setPosition] = useState<{ x: number; y: number; overVideo: boolean } | null>(null);
+  const [idle, setIdle] = useState(false);
+  const idleTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const current = useRef({ x: innerWidth / 2, y: innerHeight / 2 });
   const wakeRef = useRef(wake);
   wakeRef.current = wake;
@@ -15,9 +18,12 @@ export function RemoteCursor({ socket, wake }: { socket: Socket; wake: () => voi
     const target = () => document.elementFromPoint(current.current.x, current.current.y);
     const update = () => {
       wakeRef.current();
-      setPosition({ ...current.current });
+      setIdle(false);
+      clearTimeout(idleTimer.current);
+      idleTimer.current = setTimeout(() => setIdle(true), 2000);
       hovered?.classList.remove("remote-hover");
       const el = target();
+      setPosition({ ...current.current, overVideo: !!el?.closest('.video-interaction') });
       hovered = el?.closest('button, a, input, select, [role="button"]') || null;
       hovered?.classList.add("remote-hover");
       if (el?.closest('.video-interaction')) {
@@ -71,9 +77,23 @@ export function RemoteCursor({ socket, wake }: { socket: Socket; wake: () => voi
     socket.on('ui-center', center);
     return () => {
       hovered?.classList.remove('remote-hover');
+      clearTimeout(idleTimer.current);
       socket.off('ui-move', move); socket.off('ui-tap', click);
       socket.off('ui-scroll', scroll); socket.off('ui-center', center);
     };
   }, [socket]);
-  return position && createPortal(<div className="remote-screen-cursor" aria-hidden="true" style={{ left: position.x, top: position.y }}><svg width="25" height="30" viewBox="0 0 25 30"><path d="M3 2 L3 23 L9 18 L14 28 L19 25 L14 16 L23 15 Z" fill="#e50914" stroke="white" strokeWidth="2" strokeLinejoin="round" /></svg></div>, document.body);
+  const driving = !!position && !idle;
+  // While the phone drives, the video's own crosshair steps aside so only one pointer shows.
+  useEffect(() => {
+    document.body.classList.toggle("remote-driving", driving);
+    return () => document.body.classList.remove("remote-driving");
+  }, [driving]);
+  return position && createPortal(
+    <div
+      className={"remote-screen-cursor" + (idle ? " is-idle" : "") + (target && position.overVideo ? " is-target" : "")}
+      aria-hidden="true"
+      style={{ left: position.x, top: position.y }}
+    />,
+    document.body,
+  );
 }

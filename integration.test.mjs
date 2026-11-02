@@ -85,16 +85,16 @@ test("real sessions synchronize reviewed scenes throughout the video", async () 
       .ok,
   );
   for (const [time, pointer, id] of [
-    [9, { x: 0.56, y: 0.52 }, "chiikawa"],
-    [26, { x: 0.6, y: 0.4 }, "rakko"],
-    [31, { x: 0.27, y: 0.24 }, "usagi"],
-    [37, { x: 0.37, y: 0.55 }, "hachiware"],
-    [48, { x: 0.43, y: 0.65 }, "chiikawa"],
-    [56, { x: 0.51, y: 0.45 }, "rakko"],
-    [65, { x: 0.76, y: 0.86 }, "chiikawa"],
-    [72, { x: 0.16, y: 0.86 }, "hachiware"],
-    [82.2, { x: 0.1, y: 0.5 }, "usagi"],
-    [87, { x: 0.79, y: 0.8 }, "usagi"],
+    [5, { x: 0.6, y: 0.48 }, "chiikawa"],
+    [20, { x: 0.3, y: 0.46 }, "rakko"],
+    [30, { x: 0.27, y: 0.22 }, "usagi"],
+    [40, { x: 0.48, y: 0.32 }, "hachiware"],
+    [85, { x: 0.38, y: 0.5 }, "hachiware"],
+    [140, { x: 0.5, y: 0.5 }, "rakko"],
+    [170, { x: 0.56, y: 0.5 }, "chiikawa"],
+    [255, { x: 0.3, y: 0.55 }, "fugu"],
+    [275, { x: 0.23, y: 0.5 }, "usagi"],
+    [305, { x: 0.88, y: 0.81 }, "chiikawa"],
   ]) {
     const timed = event(phone, "state", (s) => s.time === time);
     host.emit("time", time);
@@ -116,8 +116,8 @@ test("real sessions synchronize reviewed scenes throughout the video", async () 
 test("selection outside targets has explicit fallback without false recognition", async () => {
   const host = await connect();
   await ack(host, "create", null);
-  const timed = event(host, "state", (s) => s.time === 54);
-  host.emit("time", 54);
+  const timed = event(host, "state", (s) => s.time === 15);
+  host.emit("time", 15);
   await timed;
   const miss = event(host, "selection-miss");
   host.emit("select");
@@ -207,18 +207,4 @@ test('selection destination distinguishes phone, remote cursor and desktop mouse
   result = selected(); host.emit('choose-character', 'chiikawa');
   assert.deepEqual(await result, {id:'chiikawa',target:'host'});
   const library = event(phone, 'open-library'); host.emit('open-library'); await library;
-});
-test("selection follows the video the host switched to", async () => {
-  const host = await connect();
-  await ack(host, "create", null);
-  host.emit("video", "ruX3rIj3--w");
-  const timed = event(host, "state", (s) => s.time === 26);
-  host.emit("time", 26);
-  await timed;
-  const moved = event(host, "state", (s) => s.pointer.x === 0.5);
-  host.emit("pointer", { x: 0.5, y: 0.5 });
-  await moved;
-  const chosen = event(host, "selected");
-  host.emit("select");
-  assert.equal(await chosen, "megumi");
 });

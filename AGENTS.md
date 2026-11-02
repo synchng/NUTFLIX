@@ -4,7 +4,9 @@ AI 코딩 에이전트(Codex 등)와 사람이 이 프로젝트를 수정할 때
 
 ## 프로젝트 한 줄 요약
 
-화면 속 "저사람 누구야?": TV(PC 브라우저)에서 애니메이션을 보다가 영상 속 캐릭터를 휴대폰(웹 리모컨)이나 마우스로 가리키면, 영상을 멈추지 않고 캐릭터 → 성우 → 같은 목소리의 다른 작품을 탐색하는 넷플릭스풍 웹 프로토타입(NUTFLIX)입니다. 멀티모달 인터페이스 디자인 과제물이며 UI 문구는 모두 한국어입니다.
+화면 속 "저사람 누구야?": TV(PC 브라우저)에서 치이카와 영상을 보다가 영상 속 캐릭터를 휴대폰(웹 리모컨)이나 마우스로 가리키면, 영상을 멈추지 않고 캐릭터 → 일본어판 성우 → 그 성우의 다른 출연작(소속사 공식 프로필 기준)을 탐색하는 넷플릭스풍 웹 프로토타입(NUTFLIX)입니다. 멀티모달 인터페이스 디자인 과제물이며 UI 문구는 모두 한국어입니다.
+
+영상은 하나뿐입니다: めざましテレビ 공식 채널의 「ちいかわ」 51~55화(`h0vBWdZf2l0`, 약 330초). **이 영상은 2026-11-06 07:59(JST)까지 한정 공개**라 이후에는 재생되지 않습니다.
 
 ## 명령어
 
@@ -26,56 +28,56 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 | 경로 | 역할 |
 |---|---|
 | `server.mjs` | Express + Socket.IO 서버. 세션(메모리), 영역 판정, 휴대폰 입력 중계, `/api/regions` 저장, 개발 시 Vite 미들웨어 |
-| `src/main.tsx` | 앱 대부분: 플레이어, 정보 패널, TV 작은 카드, 다음 화, 리모컨(휴대폰) 화면, 장면 편집기 |
-| `src/BrowseHome.tsx` | 홈 화면, 치이카와 상세(`TitleDetails`), 작품 상세(`WorkDetails`), 출연작 상세(`KoWorkDetails`) |
-| `src/data.ts` | 캐릭터·작품·에피소드·한국어판 성우·홈 선반 데이터 |
-| `src/logic.js` + `src/logic.d.ts` | 영역 활성화·보간·선택 판정·데이터 검증. 서버와 화면이 함께 씀 |
-| `src/RemoteCursor.tsx` | 휴대폰 터치패드 입력으로 PC 화면 전체를 조작하는 가상 커서 |
+| `src/main.tsx` | 앱 대부분: 플레이어, 정보 패널, TV 선택 피드백(`pulse`), 휴대폰 미리보기 시트(`sheetOpen`), 엔딩 카드, 리모컨(휴대폰) 화면, 장면 편집기 |
+| `src/BrowseHome.tsx` | 홈 화면(캐릭터 행, 목소리의 주인공 선반), 치이카와 상세(`TitleDetails`) |
+| `src/data.ts` | 영상(`episode`), 캐릭터(`characters`), 성우 공식 프로필 출연작(`actors`) |
+| `src/workInfo.ts` | 출연작 제목별 공식 클립(`clip`: 캐릭터 PV / 작품 PV), 한국어 표시용 `ko`(`title`, `role`, `summary`)와 소개 원문 링크(`wiki`) |
+| `src/WorkClip.tsx` | 출연작 상세 화면. 같은 성우의 다른 출연작으로 이동(`onOpen`) |
+| `src/logic.js` + `src/logic.d.ts` | 영상 ID(`VIDEO`), 캐릭터 id 목록, 영역 활성화·보간·선택 판정·데이터 검증. 서버와 화면이 함께 씀 |
+| `src/RemoteCursor.tsx` | 휴대폰 터치패드 입력으로 PC 화면 전체를 조작하는 가상 커서 (작은 원, 2초 입력이 없으면 숨김, 캐릭터 위에서 링 표시) |
 | `src/Modal.tsx` | 공용 모달(포커스 트랩) |
 | `src/streaming.css`, `src/style.css` | 스타일. 새 스타일은 `streaming.css` 끝에 설명 주석과 함께 추가 |
-| `data/regions.json` | 캐릭터 영역 259개 (서버가 시작할 때 읽음) |
-| `data/timeline-review.json` | 51화 영역을 만들 때 관찰한 시점 기록 |
+| `data/regions.json` | 캐릭터 영역 101개 (서버가 시작할 때 읽음) |
+| `data/timeline-review.json` | 영역을 만들 때 본 스토리보드 시점 기록 |
 | `public/characters`, `public/catalog`, `public/actors` | 이미지와 각 폴더의 `ATTRIBUTION.md`(출처) |
 | `logic.test.mjs`, `integration.test.mjs` | 테스트 |
 
 ### `src/main.tsx` 길잡이
 
-파일이 2,000줄이 넘습니다. 아래 이름으로 찾아가세요.
+파일이 크므로 아래 이름으로 찾아가세요.
 
 | 찾을 이름 | 내용 |
 |---|---|
-| `enterWatch(time, video)` | 재생 화면으로 전환하고 영상 교체(`loadVideoById`). 다른 영상 재생은 항상 이 함수로 |
-| `playlist`, `next`, `showUpNext`, `goUpNext` | 다음 화 순서, 엔딩 카드, 5초 카운트다운, 마지막 영상 뒤 작품 상세 열기 |
+| `enterWatch(time)` | 재생 화면으로 전환하고 해당 시점부터 재생 |
+| `showUpNext`, `goUpNext` | 엔딩 카드(크레딧 보기 / 상세 정보), 5초 카운트다운, 끝나면 치이카와 상세 열기 |
 | `socket.on("selected")`, `socket.on("selection-miss")` | 선택 결과 처리. TV/휴대폰 역할 분담이 여기서 결정됨 |
-| `tvChip` | 휴대폰으로 선택했을 때 TV에 6초간 뜨는 작은 카드 |
-| `chooseCharacter`, `openActor`, `showWork`, `openLibrary` | 정보 패널 열기 진입점 |
-| `infoPanel`, `glassPanel`, `workButtons`, `koRoles`, `titleCast` | 정보 패널 내용(캐릭터 → 성우 → 출연작), 캐릭터 검색 목록 |
+| `pulse` | 휴대폰으로 선택했을 때 TV 포인터 자리에 0.8초 뜨는 체크·원 확산 |
+| `sheetOpen` | 휴대폰 미리보기 시트. 새 선택은 내용만 바꾸고, 상세(`resultOpen`)를 닫으면 다시 보임 |
+| `chooseCharacter`, `openActor`, `openLibrary` | 정보 패널 열기 진입점 (`openActor`는 성우 단계로 바로 엶) |
+| `infoPanel`, `actor`, `profileWorks`, `allWorks` | 정보 패널 내용(캐릭터 → 성우 → 공식 프로필 출연작, 8개 이후 "모두 보기") |
+| `glassPanel`, `library` | 유리 패널 껍데기, 캐릭터 검색 목록 |
 | `resultOpenRef` 와 바깥 클릭 `useEffect` | 패널 바깥 클릭으로 닫기 |
+| `openWork` | 열려 있는 출연작 상세. 열 때 치이카와 영상을 일시정지 |
 | `Editor` | 장면 편집기(영역 그리기, 키프레임, 서버 저장) |
 
 ## 데이터 모델
 
 ### 캐릭터 (`src/data.ts` → `characters`)
-`Character` 타입: `id`, `name`, `jp`, `voice`(일본어판 성우), `voiceJp`, `image`, `color`, `description`, `voiceSource`, 선택 항목 `voiceImage`(성우 사진), `work`(작품 인덱스, 치이카와 캐릭터는 없음), `koName`(한국어판 이름).
+`Character` 타입: `id`, `name`, `jp`, `voice`(일본어판 성우 한국어 표기), `voiceJp`(일본어 표기, `actors`의 키), `image`, `color`, `description`, `voiceSource`, 선택 항목 `voiceImage`(성우 사진).
 
 **캐릭터를 추가하면 `src/logic.js`의 `characterIds`에도 같은 id를 넣어야 합니다.** 서버가 이 목록으로 영역 데이터와 선택 요청을 검증하므로, 빠뜨리면 영역 저장과 선택이 조용히 거부됩니다.
 
-### 영상
-- 치이카와 에피소드: `episodes` (`video`, `number`, `title`, `credits`(엔딩 시작 초), `dub`(캐릭터 id → 그 화의 한국어판 성우))
-- 다른 작품: `works` (`video`, `videoLabel`, `credits` 등)
-- 홈 선반 출연작: `koFeatured` (`video`, `cast`는 `koActors`에서 자동 계산)
-- `CHIIKAWA` 상수 = 51화 영상 ID. `video`가 없는 영역은 51화로 취급합니다.
+### 성우 (`actors`)
+`voiceJp`를 키로 `{ agency, profile?, works: [작품명, 배역][] }`. `works`는 **소속사 공식 프로필에 실린 애니메이션 출연작을 표기 그대로** 옮긴 것이며 치이카와 자체는 뺍니다. 공식 프로필이 없으면 `profile`을 비우고 `works`를 빈 배열로 둡니다(화면은 "크레딧이 나온 영상" 링크를 보여 줌).
 
-### 성우
-- 일본어판 연결: `sameVoice(c)` — 같은 `voice` 문자열을 가진 다른 작품 캐릭터
-- 한국어판 표시: `koVoice(c, video)` — 지금 화의 크레딧, 없으면 크레딧이 있는 다른 화. 치이카와 캐릭터만 해당
-- 한국어판 성우 출연작: `koActors` (`[작품명, 배역]` 목록). 미소와 김다빈은 같은 사람이라 같은 목록을 공유
+### 영상 (`episode`, `VIDEO`)
+`VIDEO`(logic.js)가 유일한 YouTube 영상 ID이고, `episode`에 표시용 제목·길이·엔딩 시작 초(`credits`)·출처가 있습니다.
 
 ### 영역 (`data/regions.json`)
 ```json
-{ "characterId": "chiikawa", "video": "slyms27PQJQ", "startTime": 8.5, "endTime": 9.5,
-  "boundingBox": { "x": 0.45, "y": 0.31, "width": 0.23, "height": 0.43 },
-  "keyframes": [{ "time": 9, "boundingBox": { "x": 0.45, "y": 0.31, "width": 0.22, "height": 0.4 } }] }
+{ "characterId": "chiikawa", "startTime": 3, "endTime": 7,
+  "boundingBox": { "x": 0.44, "y": 0.1, "width": 0.31, "height": 0.75 },
+  "keyframes": [{ "time": 5, "boundingBox": { "x": 0.44, "y": 0.1, "width": 0.31, "height": 0.75 } }] }
 ```
 좌표는 영상 크기 기준 0~1, 시간은 초. `keyframes`는 선택 항목입니다. 형식 검증은 `validRegions`가 합니다.
 
@@ -83,19 +85,19 @@ Node.js 22 이상, Windows·macOS 모두 지원합니다. 경로에 한글·공�
 
 이 프로젝트는 과제 평가 기준("TV와 리모컨은 같은 정보를 반복하지 않는다", "시청 경험의 변화가 드러나야 한다")에 맞춰 설계되었습니다. 아래 동작은 바꾸지 마세요. 바꿔야 한다면 사용자에게 먼저 확인하세요.
 
-1. **영상은 선택 때문에 멈추지 않습니다.** 장면 편집기에서 영역을 그릴 때만 예외입니다.
-2. **TV와 휴대폰의 역할을 나눕니다.** 휴대폰으로 선택하면 TV에는 `tvChip`(이름·목소리 작은 카드)만, 상세 탐색과 검색은 휴대폰에만 나옵니다. 휴대폰 없이 PC 마우스로 선택하면 TV 유리 패널에서 탐색합니다.
+1. **영상은 선택 때문에 멈추지 않습니다.** 예외는 장면 편집기에서 영역을 그릴 때와, 출연작 상세에서 다른 클립을 재생할 때(소리 겹침 방지)뿐입니다.
+2. **TV와 휴대폰의 역할을 나눕니다.** 휴대폰으로 선택하면 TV에는 `pulse`(0.8초 체크)만, 미리보기 시트와 상세 탐색은 휴대폰에만 나옵니다. TV에 캐릭터·성우 정보 패널을 띄우거나 선택 때 영상을 멈추지 마세요. 휴대폰 없이 PC 마우스로 선택하면 TV 유리 패널에서 탐색합니다.
 3. **빈 곳을 누르면 검색 창을 띄우지 않습니다.** 패널이 열려 있으면 패널만 닫고, 아니면 "앗, 캐릭터가 선택되지 않았어요…" 안내를 띄웁니다.
-4. **다음 화는 같은 작품 안에서만 이어집니다.** 작품의 마지막 영상이 끝나면 그 작품 상세를 엽니다. 카운트다운은 5초이고 재생 중일 때만 흐릅니다.
-5. **치이카와는 한국어 더빙 기준으로 표시합니다.** 한국어판 성우를 먼저, 일본어판 성우를 함께 보여 주고, 앱 안의 다른 작품 연결은 일본어판 성우 기준입니다.
+4. **성우는 일본어판 기준이고, 출연작은 공식 프로필 기준입니다.** 위키·팬 사이트·기억으로 출연작을 채우지 마세요.
+5. **엔딩이 오면 치이카와 상세로 이어집니다.** 카운트다운은 5초이고 재생 중일 때만 흐릅니다.
 6. **정보는 확인된 것만 넣습니다.** 캐릭터 이름·성우·배역을 추측해서 만들지 마세요. 출처가 없으면 넣지 말고, 넣으면 README의 출처나 `ATTRIBUTION.md`에 남기세요.
 
 ## 자주 하는 작업
 
-- **캐릭터 추가**: `characters`에 항목 추가 → `logic.js`의 `characterIds`에 id 추가 → 이미지를 `public/characters`에 넣고 `ATTRIBUTION.md`에 출처 기록 → 영역 추가 → 테스트.
-- **영상 추가**: 치이카와 화는 `episodes`, 다른 작품은 `works`에 추가하고 `credits`(엔딩 시작 초)를 정합니다. 그 영상의 영역에는 `video` 필드를 꼭 넣습니다.
-- **영역 추가·수정**: 앱의 장면 편집기에서 그리고 서버 저장(지금 보고 있는 영상에 저장됨)하거나, `data/regions.json`을 직접 고칩니다. 대표 장면은 `logic.test.mjs`에 검사를 하나 추가하세요.
-- **한국어판 성우 정보**: 크레딧은 `episodes[].dub`, 출연작은 `koActors`.
+- **영상 교체(공개 기한 이후 등)**: README의 "7. 영상 바꾸기" 순서를 따르세요. `VIDEO` → `episode` → `regions.json` → (캐릭터가 바뀌면) `characters`·`actors`·`characterIds` → 테스트 시점 순서입니다.
+- **캐릭터 추가**: `characters`에 항목 추가 → `characterIds`에 id 추가 → `actors`에 성우(공식 프로필) 추가 → 이미지를 `public/characters`에 넣고 `ATTRIBUTION.md`에 출처 기록 → 영역 추가 → 테스트.
+- **영역 추가·수정**: 앱의 장면 편집기에서 그리고 서버 저장하거나, `data/regions.json`을 직접 고칩니다. 대표 장면은 `logic.test.mjs`에 검사를 하나 추가하세요.
+- **성우 출연작 갱신**: 공식 프로필을 다시 확인하고 `actors[voiceJp].works`를 표기 그대로 고칩니다. 새 작품의 클립과 한국어 제목·배역·소개(`ko`)는 `workInfo`에 같은 일본어 제목 키로 추가합니다(화면에는 한국어, 원제는 함께 표시). 클립은 **공식 채널 영상만**, 배역 이름이 제목에 있으면 `kind: "character"`, 아니면 `"pv"`로 넣고 삽입 재생이 되는지 확인하세요.
 - **문구 수정**: UI는 부드러운 해요체입니다(예: "자세한 정보는 휴대폰에서", "앗, 캐릭터가 선택되지 않았어요"). 기존 문구의 말투에 맞추세요.
 
 ## 주의할 점

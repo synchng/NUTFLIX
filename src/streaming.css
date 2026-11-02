@@ -1649,7 +1649,18 @@ body {
 .pair-dialog>svg{margin-left:auto;margin-right:auto}header .brand{color:#e50914}
 @media(max-width:760px){.player-volume{position:relative}.player-volume input{position:absolute;left:-30px;bottom:43px;width:100px!important;height:36px;padding:8px;background:#252525f5;border-radius:4px;opacity:0;pointer-events:none;box-shadow:0 4px 20px #0008}.player-volume:hover input,.player-volume:focus-within input{opacity:1;pointer-events:auto}.player-volume{gap:0}}
 
-.remote-screen-cursor { position: fixed; z-index: 2147483647; pointer-events: none; filter: drop-shadow(0 2px 3px #0009); }
+.remote-screen-cursor { position: fixed; z-index: 2147483647; pointer-events: none; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:#fffe; box-shadow:0 0 0 1.5px #0005, 0 2px 8px #0008; transition:opacity .4s ease; }
+.remote-screen-cursor::after { content:""; position:absolute; inset:-9px; border-radius:50%; border:1.5px solid #fff; box-shadow:0 0 0 1px #0003; opacity:0; transform:scale(.6); transition:opacity .18s ease, transform .18s ease; }
+.remote-screen-cursor.is-target::after { opacity:.9; transform:scale(1); }
+.remote-screen-cursor.is-idle { opacity:0; }
+.remote-driving .video-interaction .cursor { opacity:0; }
+/* Phone selection on the TV: a short ring and check, then gone (0.8s). */
+.watch-stage .select-pulse { position:absolute; z-index:4; width:52px; height:52px; margin:-26px 0 0 -26px; display:grid; place-items:center; color:#fff; pointer-events:none; filter:drop-shadow(0 1px 3px #0009); }
+.watch-stage .select-pulse::before { content:""; position:absolute; inset:0; border-radius:50%; border:2px solid #fff; animation:select-ring .8s ease-out forwards; }
+.watch-stage .select-pulse svg { animation:select-check .8s ease forwards; }
+@keyframes select-ring { from { transform:scale(.35); opacity:.95; } to { transform:scale(1.5); opacity:0; } }
+@keyframes select-check { 0% { transform:scale(.6); opacity:0; } 20% { transform:scale(1); opacity:1; } 70% { opacity:1; } 100% { opacity:0; } }
+@media(prefers-reduced-motion:reduce) { .watch-stage .select-pulse::before { display:none; } .watch-stage .select-pulse svg { animation:none; } .remote-screen-cursor, .remote-screen-cursor::after { transition:none; } }
 .remote-hover { outline: 2px solid #fff !important; outline-offset: 3px; }
 .remote-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; }
 .remote-heading h1 { font-size:32px; margin:12px 0 0; }
@@ -1776,18 +1787,86 @@ body {
 @media(max-width:760px) { .watch-stage .next-up { right:12px; max-width:calc(100% - 24px); } .watch-stage .next-up button { min-height:38px; padding:0 14px; font-size:13px; } }
 
 /* Korean dub actors' other credits: titles outside this app, so plain rows rather than buttons. */
-.ko-works { list-style:none; margin:10px 0 16px; padding:0; display:grid; gap:6px; }
-.ko-works li { display:flex; flex-direction:column; gap:2px; padding:10px 12px; border:1px solid #ffffff24; border-radius:12px; background:#ffffff0d; font-size:13px; }
-.ko-works small { font-size:10px; color:#ffffffb0; }
+.profile-works { list-style:none; margin:10px 0 16px; padding:0; display:grid; gap:6px; }
+.profile-works li { display:flex; flex-direction:column; gap:2px; padding:10px 12px; border:1px solid #ffffff24; border-radius:12px; background:#ffffff0d; font-size:13px; }
+.profile-works small { font-size:10px; color:#ffffffb0; }
 .detail-character-row button span small { display:block; font-size:11px; color:#999; margin-top:2px; }
 
-/* Phone selections: the TV only names the character beside it; details stay on the phone. */
-.watch-stage .tv-chip { position:absolute; z-index:4; display:flex; align-items:center; gap:10px; padding:8px 14px 8px 8px; transform:translate(-50%, calc(-100% - 10px)); max-width:260px; border:1px solid #ffffff55; border-radius:16px; background:linear-gradient(135deg,#ffffff1c,#ffffff04 42%,#ffffff12),#111820a8; -webkit-backdrop-filter:blur(10px) saturate(150%); backdrop-filter:blur(10px) saturate(150%); box-shadow:inset 1px 1px 0 #ffffff60,0 10px 28px #0004; color:#fff; text-shadow:0 1px 3px #000a; pointer-events:none; animation:tv-chip 6s ease forwards; }
-.watch-stage .tv-chip.is-corner { left:auto; right:32px; top:96px; transform:none; }
-.watch-stage .tv-chip .character-art.compact { width:40px; height:40px; flex-shrink:0; }
-.watch-stage .tv-chip span { display:flex; flex-direction:column; gap:2px; min-width:0; }
-.watch-stage .tv-chip strong { font-size:14px; }
-.watch-stage .tv-chip small { font-size:11px; color:#ffffffd0; }
-.watch-stage .tv-chip em { display:flex; align-items:center; gap:4px; font-style:normal; font-size:10px; color:#ffffffa0; }
-@keyframes tv-chip { 0% { opacity:0; } 6% { opacity:1; } 88% { opacity:1; } 100% { opacity:0; } }
-@media(prefers-reduced-motion:reduce) { .watch-stage .tv-chip { animation:none; } }
+/* Home: voice actors of this video; each opens that actor's profile works. */
+.voice-shelf { display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:14px; }
+.voice-tile { display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:0; border:0; background:none; color:#fff; text-align:left; cursor:pointer; }
+.voice-tile-photo { width:100%; aspect-ratio:1; border-radius:8px; overflow:hidden; display:grid; place-items:center; margin-bottom:8px; transition:transform .2s; }
+.voice-tile:hover .voice-tile-photo { transform:scale(1.03); }
+.voice-tile-photo img { width:100%; height:100%; object-fit:cover; object-position:50% 20%; }
+.voice-tile-photo span { font-size:48px; font-weight:800; color:#1f2a33; }
+.voice-tile strong { font-size:17px; }
+.voice-tile small { font-size:13px; color:#aaa; }
+.voice-tile em { font-style:normal; font-size:12px; color:#e50914; font-weight:700; }
+.more-works { margin:-6px 0 14px; }
+@media(max-width:760px) { .voice-shelf { grid-template-columns:repeat(3, minmax(0, 1fr)); } }
+
+/* Profile work detail: the official clip on top, then title, role and summary. */
+.profile-works li > button { display:flex; flex-direction:column; gap:2px; width:100%; padding:10px 12px; border:0; background:none; color:inherit; font:inherit; text-align:left; cursor:pointer; position:relative; }
+.profile-works li > button > svg { position:absolute; right:12px; top:50%; transform:translateY(-50%); opacity:.7; }
+.profile-works li > button:hover { background:#ffffff14; border-radius:12px; }
+.profile-works li { padding:0; }
+.work-clip-video { position:relative; aspect-ratio:16/9; background:#000; }
+.work-clip-video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.work-clip-empty { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#ccc; }
+.work-clip-empty a { display:inline-flex; align-items:center; gap:6px; color:#fff; }
+.work-clip-title { font-size:34px; font-weight:800; margin:8px 0 18px; }
+/* Work detail opens from inside the glass panel, so it must sit above it. */
+.modal-backdrop.work-modal { z-index:150; }
+
+/* Related works inside a work detail: same voice actor, other titles. */
+.related-works { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:16px; margin-bottom:24px; }
+.related-work { display:flex; flex-direction:column; gap:4px; padding:0; border:0; background:none; color:#fff; text-align:left; cursor:pointer; }
+.related-work > div { position:relative; aspect-ratio:16/9; border-radius:6px; overflow:hidden; background:#2a2a2a; display:grid; place-items:center; margin-bottom:6px; }
+.related-work > div img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.related-work > div span { font-size:34px; font-weight:800; color:#555; }
+.related-work > div svg { position:absolute; right:8px; bottom:8px; filter:drop-shadow(0 1px 3px #000); }
+.related-work:hover > div { outline:2px solid #fff; }
+.related-work strong { font-size:14px; line-height:1.35; }
+.related-work small { font-size:12px; color:#999; }
+.work-clip .related-work { align-items:stretch; justify-content:flex-start; min-height:0; }
+.work-clip .related-work > div { width:100%; }
+.work-clip .related-work strong, .work-clip .related-work small { display:block; }
+
+/* Korean titles lead; the profile's original Japanese stays visible, small. */
+.profile-works li > button em { font-style:normal; font-size:10px; color:#ffffff80; }
+.work-clip-original { margin:-12px 0 16px; font-size:13px; color:#999; }
+
+/* Remote: one big play/pause control and the search history under it. */
+.remote-play { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:18px; }
+.remote-play button { width:76px; height:76px; border-radius:50%; display:grid; place-items:center; padding:0; background:#fff; color:#111; border:0; transition:transform .12s, background .2s; }
+.remote-play button:active { transform:scale(.92); }
+.remote-play button.is-playing { background:rgba(255,255,255,.14); color:#fff; box-shadow:inset 0 0 0 2px rgba(255,255,255,.5); }
+.remote-play button:disabled { opacity:.4; }
+.remote-play span { font-size:12px; color:rgba(255,255,255,.65); }
+.remote-history { margin-top:26px; }
+.remote-history-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.remote-history h2 { font-size:15px; margin:0; }
+.remote-history-head button { background:none; border:0; color:rgba(255,255,255,.6); font-size:12px; padding:4px 0; min-height:0; }
+.remote-history ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.remote-history li > button { width:100%; display:flex; align-items:center; justify-content:flex-start; gap:12px; padding:8px 12px; text-align:left; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:10px; }
+.remote-history img { width:40px; height:40px; border-radius:50%; object-fit:cover; background:#222; }
+.remote-history span { display:flex; flex-direction:column; gap:2px; }
+.remote-history strong { font-size:14px; }
+.remote-history small, .remote-history p { font-size:12px; color:rgba(255,255,255,.6); }
+
+/* Phone: preview sheet over the touchpad (~28% of the screen). Only the sheet takes swipes. */
+.remote.has-sheet { padding-bottom:calc(30vh + 16px); }
+.remote.is-detail :is(.remote-heading, .remote-help, .touchpad, .remote-play, .remote-history) { display:none; }
+.remote-sheet { position:fixed; left:0; right:0; bottom:0; z-index:40; height:28vh; min-height:190px; max-width:520px; margin:0 auto; box-sizing:border-box; display:flex; flex-direction:column; gap:12px; padding:8px 18px calc(16px + env(safe-area-inset-bottom)); border-radius:20px 20px 0 0; border:1px solid #ffffff22; border-bottom:0; background:#1c1c20f2; -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); box-shadow:0 -10px 30px #0008; touch-action:none; user-select:none; -webkit-user-select:none; animation:sheet-up .25s ease-out; }
+.remote-sheet-grip { width:40px; height:4px; margin:0 auto 4px; border-radius:2px; background:#ffffff40; flex-shrink:0; }
+.remote-sheet-body { display:flex; align-items:center; gap:14px; animation:sheet-swap .2s ease; }
+.remote-sheet-body img { width:60px; height:60px; border-radius:14px; object-fit:cover; background:#2a2a30; flex-shrink:0; }
+.remote-sheet-body > div { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
+.remote-sheet-body small { font-size:11px; color:#ffffff90; }
+.remote-sheet-body strong { font-size:18px; }
+.remote-sheet-body span { font-size:13px; color:#ffffffc0; }
+.remote-sheet .remote-sheet-close { width:36px; height:36px; min-height:0; padding:0; display:grid; place-items:center; border-radius:50%; background:#ffffff14; border:0; flex-shrink:0; }
+.remote-sheet .remote-sheet-more { width:100%; min-height:46px; margin-top:auto; border-radius:12px; background:#fff; color:#111; border:0; font-weight:700; }
+@keyframes sheet-up { from { transform:translateY(100%); } to { transform:none; } }
+@keyframes sheet-swap { from { opacity:.3; transform:translateY(4px); } to { opacity:1; transform:none; } }
+@media(prefers-reduced-motion:reduce) { .remote-sheet, .remote-sheet-body { animation:none; } }

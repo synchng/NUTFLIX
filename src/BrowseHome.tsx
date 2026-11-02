@@ -9,15 +9,14 @@ import {
   ChevronRight,
   ArrowUpRight,
   Focus,
-  ExternalLink,
 } from "lucide-react";
-import { characters, works, sameVoice, episodes, CHIIKAWA, koFeatured, koVoice } from "./data";
+import { characters, actors, episode } from "./data";
 
 type Props = {
   onPlay: (time: number) => void;
   onDetails: () => void;
   onCharacter: (id: string) => void;
-  onKoWork: (index: number) => void;
+  onActor: (characterId: string) => void;
   onPair: () => void;
   onSearch: () => void;
   onEdit: () => void;
@@ -95,10 +94,10 @@ export function BrowseHome(p: Props) {
           <h1>내가 찜한 콘텐츠</h1>
           {p.saved ? (
             <button className="episode-tile saved-tile" onClick={p.onDetails}>
-              <img src="/catalog/chiikawa.jpg" alt="치이카와 51화" />
+              <img src="/catalog/chiikawa.jpg" alt="치이카와" />
               <span>
                 <strong>치이카와</strong>
-                <small>51화 · 강해져라 1편</small>
+                <small>{episode.label}</small>
               </span>
               <Play size={23} />
             </button>
@@ -122,7 +121,7 @@ export function BrowseHome(p: Props) {
             <img
               className="billboard-image"
               src="/catalog/chiikawa.jpg"
-              alt="검과 망토를 두른 랏코"
+              alt="토벌 도구를 든 치이카와와 하치와레"
               fetchPriority="high"
             />
             <div className="billboard-shade" />
@@ -159,7 +158,7 @@ export function BrowseHome(p: Props) {
                 <span>영상 속 캐릭터를 직접 선택해 보세요</span>
               </div>
             </div>
-            <span className="billboard-episode">51화 · 강해져라 1편</span>
+            <span className="billboard-episode">{episode.label}</span>
           </section>
           <main className="browse-rows">
             <section className="shelf" ref={cast} id="characters">
@@ -170,8 +169,8 @@ export function BrowseHome(p: Props) {
                 </button>
               </div>
               <div className="character-shelf">
-                {characters.filter((c) => c.work === undefined).map(({ id }) => {
-                  const c = characters.find((c) => c.id === id)!;
+                {characters.map((c) => {
+                  const id = c.id;
                   return (
                     <button
                       className="character-tile"
@@ -183,7 +182,7 @@ export function BrowseHome(p: Props) {
                       <div className="character-tile-shade" />
                       <span className="character-tile-name">
                         {c.name}
-                        <small>{koVoice(c) ?? c.voice}</small>
+                        <small>{c.voice}</small>
                       </span>
                       <span className="tile-circle">
                         <Plus size={18} />
@@ -207,20 +206,20 @@ export function BrowseHome(p: Props) {
                   onClick={() => p.onPlay(p.resume)}
                 >
                   <div className="episode-tile-image">
-                    <img src="/catalog/chiikawa.jpg" alt="치이카와 51화 랏코" />
+                    <img src="/catalog/chiikawa.jpg" alt="치이카와" />
                     <span className="episode-play">
                       <Play size={22} fill="currentColor" />
                     </span>
                   </div>
                   <span>
                     <strong>치이카와</strong>
-                    <small>51화 · 강해져라 1편</small>
+                    <small>{episode.label}</small>
                   </span>
                   {p.resume > 0 && (
                     <div className="episode-progress">
                       <i
                         style={{
-                          width: `${Math.min(100, (p.resume / 91) * 100)}%`,
+                          width: `${Math.min(100, (p.resume / 330) * 100)}%`,
                         }}
                       />
                     </div>
@@ -242,34 +241,25 @@ export function BrowseHome(p: Props) {
             </section>
             <section className="shelf">
               <div className="shelf-heading">
-                <h2>같은 목소리, 다른 이야기</h2>
+                <h2>목소리의 주인공</h2>
               </div>
-              <div className="works-shelf">
-                {koFeatured.map((f) => (
-                  <button
-                    className="work-tile"
-                    key={f.title}
-                    aria-label={`${f.title}: ${f.cast.map((c) => `${c.actor} ${c.role}`).join(", ")}`}
-                    onClick={() => p.onKoWork(koFeatured.indexOf(f))}
-                  >
-                    <img src={f.image} alt={f.title} loading="lazy" />
-                    <div className="work-shade" />
-                    <div className="work-tile-content">
-                      <span>{f.title}</span>
-                      <small>
-                        {f.cast[0].actor} · {f.cast[0].role}
-                        {f.cast.length > 1 && ` 외 먼작귀 성우 ${f.cast.length - 1}명`}
-                      </small>
-                    </div>
-                    <span className="tile-circle">
-                      <Info size={18} />
-                    </span>
-                  </button>
-                ))}
+              <div className="voice-shelf">
+                {characters.map((c) => {
+                  const a = actors[c.voiceJp];
+                  return (
+                    <button className="voice-tile" key={c.id} onClick={() => p.onActor(c.id)}>
+                      <div className="voice-tile-photo" style={{ background: c.color }}>
+                        {c.voiceImage ? <img src={c.voiceImage} alt={c.voice} loading="lazy" /> : <span>{c.voiceJp[0]}</span>}
+                      </div>
+                      <strong>{c.voice}</strong>
+                      <small>{c.voiceJp} · {c.name}</small>
+                      <em>{a.works.length ? `출연작 ${a.works.length}개` : a.profile ? "공식 프로필" : "크레딧 확인"}</em>
+                    </button>
+                  );
+                })}
               </div>
               <p className="catalog-note">
-                먼작귀 한국어판 성우들의 다른 출연작이에요. 누르면 작품 상세
-                정보로 이동해요.
+                일본어판 성우예요. 누르면 소속사 공식 프로필 기준의 다른 출연작을 볼 수 있어요.
               </p>
             </section>
           </main>
@@ -280,7 +270,7 @@ export function BrowseHome(p: Props) {
         <div>
           <button onClick={p.onEdit}>장면 편집</button>
           <a
-            href="https://www.youtube.com/watch?v=JXeE6pFSBoI"
+            href={`https://www.youtube.com/watch?v=${episode.video}`}
             target="_blank"
             rel="noreferrer"
           >
@@ -304,7 +294,7 @@ export function TitleDetails({
   saved,
   onCharacter,
 }: {
-  onPlay: (t: number, video?: string) => void;
+  onPlay: (t: number) => void;
   onSave: () => void;
   saved: boolean;
   onCharacter: (id: string) => void;
@@ -312,7 +302,7 @@ export function TitleDetails({
   return (
     <div className="title-details">
       <div className="title-details-art">
-        <img src="/catalog/chiikawa.jpg" alt="치이카와 랏코" />
+        <img src="/catalog/chiikawa.jpg" alt="치이카와와 하치와레" />
         <div />
         <section>
           <h1>치이카와</h1>
@@ -340,53 +330,43 @@ export function TitleDetails({
             <div className="metadata-line">
               <strong>캐릭터 탐색 지원</strong>
               <span>애니메이션</span>
-              <span>{episodes.length}개 에피소드</span>
+              <span>5개 에피소드</span>
               <span className="outline-label">YouTube</span>
             </div>
             <p>
               나가노의 만화에서 시작된 작고 귀여운 친구들의 이야기.
               <br />
-              치이카와와 하치와레, 그리고 랏코의 만남을 함께해 보세요.
+              토벌 랭커를 꿈꾸는 치이카와와 하치와레, 그리고 랏코의 이야기를 함께해 보세요.
             </p>
           </div>
           <p className="detail-cast">
-            <span>등장인물:</span> 치이카와, 하치와레, 랏코
+            <span>등장인물:</span> {characters.map((c) => c.name).join(", ")}
             <br />
-            <span>제목·엔딩:</span> 우사기
+            <span>성우:</span> 일본어판 (공식 캐스트)
             <br />
-            <span>탐색:</span> 캐릭터 · 한국어 더빙 성우 · 관련 작품
+            <span>탐색:</span> 캐릭터 · 성우 · 공식 프로필 출연작
           </p>
         </div>
         <div className="episode-heading">
           <h2>에피소드</h2>
-          <span>공개 영상 {episodes.length}개</span>
+          <span>{episode.source}</span>
         </div>
-        {episodes.map((e) => (
-          <button className="episode-row" key={e.video} onClick={() => onPlay(0, e.video)}>
-            <span className="episode-number">{e.number}</span>
-            <div>
-              <img
-                src={e.video === CHIIKAWA ? "/catalog/chiikawa.jpg" : `https://i.ytimg.com/vi/${e.video}/hqdefault.jpg`}
-                alt={e.title}
-                loading="lazy"
-              />
-              <Play size={25} />
-            </div>
-            <section>
-              <strong>
-                {e.title} <small>{e.length}</small>
-              </strong>
-              <p>
-                {e.video === CHIIKAWA
-                  ? "작은 친구들과 랏코의 이야기를 보면서, 영상에 나온 캐릭터를 직접 탐색하세요."
-                  : `${e.source} 전편 공개 영상. 치이카와·하치와레·우사기가 나오는 장면에서 직접 탐색하세요.`}
-              </p>
-            </section>
-          </button>
-        ))}
+        <button className="episode-row" onClick={() => onPlay(0)}>
+          <span className="episode-number">51~55</span>
+          <div>
+            <img src="/catalog/chiikawa.jpg" alt={episode.label} />
+            <Play size={25} />
+          </div>
+          <section>
+            <strong>
+              「토벌 랭커」 편 <small>{episode.length}</small>
+            </strong>
+            <p>51화부터 55화까지 이어 보면서, 영상에 나온 캐릭터를 직접 가리켜 탐색하세요.</p>
+          </section>
+        </button>
         <h2 className="cast-heading">등장인물 살펴보기</h2>
         <div className="detail-character-row">
-          {characters.filter((c) => c.work === undefined).map((c) => (
+          {characters.map((c) => (
             <button key={c.id} onClick={() => onCharacter(c.id)}>
               <div style={{ background: c.color }}>
                 <img src={c.image} alt={c.name} />
@@ -400,199 +380,3 @@ export function TitleDetails({
   );
 }
 
-export function WorkDetails({
-  index,
-  onWork,
-  onCharacter,
-  onPlay,
-  onTitle,
-}: {
-  index: number;
-  onWork: (index: number) => void;
-  onCharacter: (id: string) => void;
-  onPlay: (index: number) => void;
-  onTitle: () => void;
-}) {
-  const w = works[index];
-  const owner = characters.find((c) => c.id === w.owner)!;
-  const cast = characters.filter((c) => c.work === index);
-  const others = cast.flatMap(sameVoice);
-  return (
-    <div className="title-details">
-      <div className="title-details-art">
-        <img src={w.image} alt={w.name} />
-        <div />
-        <section>
-          <h1>{w.name}</h1>
-          <div className="billboard-actions">
-            <button className="stream-button light" onClick={() => onPlay(index)}>
-              <Play size={21} fill="currentColor" />
-              재생
-            </button>
-            <a className="round-action" href={w.url} target="_blank" rel="noreferrer" aria-label="작품 공식 사이트">
-              <ExternalLink size={21} />
-            </a>
-          </div>
-        </section>
-      </div>
-      <div className="title-details-body">
-        <div className="title-metadata">
-          <div>
-            <div className="metadata-line">
-              <strong>같은 목소리</strong>
-              <span>애니메이션</span>
-              <span>{w.genre}</span>
-            </div>
-            <p>{w.summary}</p>
-          </div>
-          <p className="detail-cast">
-            <span>원제:</span> {w.jp}
-            <br />
-            <span>성우:</span> {owner.voice} ({owner.voiceJp})
-            <br />
-            <span>담당 배역:</span> {w.role} ({w.roleJp})
-          </p>
-        </div>
-        <div className="episode-heading">
-          <h2>영상</h2>
-          <span>공식 영상 1개</span>
-        </div>
-        <button className="episode-row" onClick={() => onPlay(index)}>
-          <span className="episode-number">1</span>
-          <div>
-            <img src={`https://i.ytimg.com/vi/${w.video}/hqdefault.jpg`} alt={w.name + " 영상"} />
-            <Play size={25} />
-          </div>
-          <section>
-            <strong>{w.name}</strong>
-            <p>{w.videoLabel}</p>
-          </section>
-        </button>
-        {others.length > 0 && (
-          <>
-            <h2 className="cast-heading">{owner.voice}의 다른 작품</h2>
-            <div className="works-shelf">
-              {others.map((o) => (
-                <button
-                  className="work-tile"
-                  key={o.id}
-                  onClick={() => (o.work === undefined ? onTitle() : onWork(o.work))}
-                >
-                  <img
-                    src={o.work === undefined ? "/catalog/chiikawa.jpg" : works[o.work].image}
-                    alt={o.work === undefined ? "치이카와" : works[o.work].name}
-                    loading="lazy"
-                  />
-                  <div className="work-shade" />
-                  <div className="work-tile-content">
-                    <span>{o.work === undefined ? "치이카와" : works[o.work].name}</span>
-                    <small>{o.name}</small>
-                  </div>
-                  <span className="tile-circle">
-                    <Info size={18} />
-                  </span>
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-        <h2 className="cast-heading">등장인물 살펴보기</h2>
-        <div className="detail-character-row">
-          {cast.map((c) => (
-            <button key={c.id} onClick={() => onCharacter(c.id)}>
-              <div style={{ background: c.color }}>
-                <img src={c.image} alt={c.name} />
-              </div>
-              <span>{c.name}</span>
-            </button>
-          ))}
-        </div>
-        <p className="catalog-note">
-          시청 제공 여부는 작품 공식 사이트에서 확인해 주세요.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-
-export function KoWorkDetails({
-  index,
-  onPlay,
-  onActor,
-}: {
-  index: number;
-  onPlay: (index: number) => void;
-  onActor: (actor: string) => void;
-}) {
-  const f = koFeatured[index];
-  return (
-    <div className="title-details">
-      <div className="title-details-art">
-        <img src={f.image} alt={f.title} />
-        <div />
-        <section>
-          <h1>{f.title}</h1>
-          <div className="billboard-actions">
-            <button className="stream-button light" onClick={() => onPlay(index)}>
-              <Play size={21} fill="currentColor" />
-              재생
-            </button>
-          </div>
-        </section>
-      </div>
-      <div className="title-details-body">
-        <div className="title-metadata">
-          <div>
-            <div className="metadata-line">
-              <strong>같은 목소리</strong>
-              <span>애니메이션</span>
-              <span>{f.genre}</span>
-            </div>
-            <p>{f.summary}</p>
-          </div>
-          <p className="detail-cast">
-            <span>한국어판 출연:</span> {f.cast.map((c) => c.actor).join(", ")}
-            <br />
-            <span>먼작귀 성우:</span> {f.cast.length}명
-          </p>
-        </div>
-        <div className="episode-heading">
-          <h2>영상</h2>
-          <span>공식 영상 1개</span>
-        </div>
-        <button className="episode-row" onClick={() => onPlay(index)}>
-          <span className="episode-number">1</span>
-          <div>
-            <img src={`https://i.ytimg.com/vi/${f.video}/hqdefault.jpg`} alt={f.title + " 영상"} />
-            <Play size={25} />
-          </div>
-          <section>
-            <strong>{f.title}</strong>
-            <p>{f.videoLabel}</p>
-          </section>
-        </button>
-        <h2 className="cast-heading">먼작귀 성우가 맡은 배역</h2>
-        <div className="detail-character-row">
-          {f.cast.map((c) => {
-            const ch = characters.find((ch) => koVoice(ch) === c.actor);
-            return (
-              <button key={c.actor} onClick={() => onActor(c.actor)}>
-                <div style={{ background: ch?.color ?? "#333" }}>
-                  {ch && <img src={ch.image} alt={ch.name} />}
-                </div>
-                <span>
-                  {c.actor} · {c.role}
-                  {ch && <small>먼작귀 {ch.koName ?? ch.name}</small>}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        <p className="catalog-note">
-          출연작 목록은 제작자가 정리한 자료예요. 시청 제공 여부는 각 작품의 공식 사이트에서 확인해 주세요.
-        </p>
-      </div>
-    </div>
-  );
-}

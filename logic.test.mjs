@@ -40,74 +40,33 @@ import { readFileSync } from "node:fs";
 const timeline = JSON.parse(
   readFileSync(new URL("./data/regions.json", import.meta.url), "utf8"),
 );
-test("reviewed timeline is valid and covers opening, body, title, and credits", () => {
+test("timeline is valid and covers all five episodes and the credits", () => {
   assert.ok(validRegions(timeline));
   for (const [time, id] of [
-    [2, "rakko"],
-    [9, "chiikawa"],
-    [14, "chiikawa"],
-    [18, "chiikawa"],
-    [22, "rakko"],
-    [26, "rakko"],
-    [31, "usagi"],
-    [33, "hachiware"],
-    [37, "chiikawa"],
-    [41, "hachiware"],
-    [44, "chiikawa"],
-    [46, "rakko"],
-    [48, "chiikawa"],
-    [51, "hachiware"],
-    [56, "rakko"],
-    [65, "chiikawa"],
-    [72, "hachiware"],
-    [82, "usagi"],
-    [87, "usagi"],
+    [5, "chiikawa"], [20, "rakko"], [30, "usagi"], [45, "chiikawa"], [85, "hachiware"],
+    [140, "rakko"], [170, "chiikawa"], [220, "rakko"], [255, "fugu"], [275, "usagi"],
+    [305, "chiikawa"], [330, "hachiware"],
   ])
-    assert.ok(
-      activeRegions(timeline, time).some((r) => r.characterId === id),
-      `${id} at ${time}`,
-    );
+    assert.ok(activeRegions(timeline, time).some((r) => r.characterId === id), `${id} at ${time}`);
 });
 test("empty shots do not fabricate named characters", () => {
-  for (const time of [4, 6, 54, 60.5, 79, 80, 84])
+  for (const time of [15, 65, 115, 125, 180, 225, 245, 285, 310])
     assert.equal(activeRegions(timeline, time).length, 0, `empty shot ${time}`);
 });
 test("centers of all reviewed character regions resolve to the expected character", () => {
-  for (const time of [
-    2, 9, 14, 18, 19.5, 22, 26, 28, 31, 33, 37, 41, 44, 46, 48, 51, 56, 65, 72,
-    82, 87,
-  ])
+  for (const time of new Set(timeline.map((r) => (r.startTime + r.endTime) / 2)))
     for (const region of activeRegions(timeline, time)) {
       const b = region.boundingBox;
       assert.equal(
-        hit(activeRegions(timeline, time), {
-          x: b.x + b.width / 2,
-          y: b.y + b.height / 2,
-        }),
+        hit(activeRegions(timeline, time), { x: b.x + b.width / 2, y: b.y + b.height / 2 }),
         region.characterId,
         `${region.characterId} center at ${time}`,
       );
     }
 });
+test("every character of the video can be selected somewhere", () => {
+  for (const id of ["chiikawa", "hachiware", "usagi", "rakko", "fugu"])
+    assert.ok(timeline.some((r) => r.characterId === id), id);
+  assert.equal(validRegions([{ ...region, characterId: "megumi" }]), false);
+});
 test('malformed imported JSON is rejected instead of crashing',()=>{assert.equal(validRegions([null]),false);assert.equal(validRegions([{...region,keyframes:[null]}]),false);});
-test("other titles keep their own regions", () => {
-  assert.ok(activeRegions(timeline, 26, "ruX3rIj3--w").some((r) => r.characterId === "megumi"));
-  assert.ok(!activeRegions(timeline, 26).some((r) => r.characterId === "megumi"));
-  assert.ok(activeRegions(timeline, 58, "lWQQOd6L4UE").some((r) => r.characterId === "chiyo"));
-  assert.ok(activeRegions(timeline, 20, "UNjHxhljAck").some((r) => r.characterId === "kurumi"));
-  assert.equal(validRegions([{ ...region, video: "not a video id" }]), false);
-});
-test("added Chiikawa episodes resolve their own scenes", () => {
-  assert.ok(activeRegions(timeline, 58, "slyms27PQJQ").some((r) => r.characterId === "hachiware"));
-  assert.ok(activeRegions(timeline, 44, "5dTRQblIt-Q").some((r) => r.characterId === "chiikawa"));
-  assert.ok(activeRegions(timeline, 95, "BVzxUqjbmzk").some((r) => r.characterId === "usagi"));
-  assert.deepEqual(activeRegions(timeline, 10, "BVzxUqjbmzk").map((r) => r.characterId), ["momonga"]);
-});
-test("every title registers its supporting cast", () => {
-  for (const [video, time, id] of [
-    ["slyms27PQJQ", 21, "momonga"], ["slyms27PQJQ", 4, "roudou-yoroi"], ["slyms27PQJQ", 45, "pochette-yoroi"],
-    ["5dTRQblIt-Q", 12, "kurimanju"], ["BVzxUqjbmzk", 8, "ode"], ["ruX3rIj3--w", 89, "higuruma"],
-    ["lWQQOd6L4UE", 43, "nozaki"], ["UNjHxhljAck", 61, "meguree"],
-  ])
-    assert.ok(activeRegions(timeline, time, video).some((r) => r.characterId === id), `${id} at ${time}`);
-});

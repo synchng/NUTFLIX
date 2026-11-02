@@ -1,15 +1,8 @@
 export const clamp = (n) => Math.max(0, Math.min(1, n));
-export const CHIIKAWA = "JXeE6pFSBoI";
-export const characterIds = [
-  "chiikawa", "hachiware", "usagi", "rakko", "momonga", "kurimanju", "roudou-yoroi", "pochette-yoroi", "ode",
-  "megumi", "yuji", "maki", "yuki-tsukumo", "tengen", "higuruma", "takaba",
-  "chiyo", "nozaki", "mikoshiba", "hori", "wakamatsu", "kashima", "seo",
-  "kurumi", "yuki", "yuri", "miki", "meguree", "taromaru",
-];
-export const validVideo = (v) => typeof v === "string" && /^[\w-]{11}$/.test(v);
-export function activeRegions(regions, time, video = CHIIKAWA) {
+export const VIDEO = "h0vBWdZf2l0";
+export const characterIds = ["chiikawa", "hachiware", "usagi", "rakko", "fugu"];
+export function activeRegions(regions, time) {
   return regions
-    .filter((r) => (r.video || CHIIKAWA) === video)
     .filter((r) => time >= r.startTime - 1 / 60 && time <= r.endTime + 1 / 60)
     .map((r) => {
       const keys = [...(r.keyframes || [])].sort((a, b) => a.time - b.time);
@@ -60,7 +53,6 @@ export function validRegions(v) {
       (r) =>
         r && typeof r === "object" &&
         characterIds.includes(r.characterId) &&
-        (r.video === undefined || validVideo(r.video)) &&
         Number.isFinite(r.startTime) &&
         r.startTime >= 0 &&
         Number.isFinite(r.endTime) &&
